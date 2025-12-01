@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taco Naan Street Food Dax</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --yellow: #f7c948;
+        --deep-yellow: #c88c0f;
+        --dark: #1d1a16;
+        --muted: #68635a;
+        --off-white: #fdf9f2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      @keyframes bodyFadeIn {
+        from {
+          opacity: 0;
+          filter: blur(6px);
+        }
+        to {
+          opacity: 1;
+          filter: blur(0);
+        }
+      }
+
+      @keyframes floatUp {
+        from {
+          opacity: 0;
+          transform: translateY(35px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slowGlow {
+        0% {
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.05);
+        }
+        50% {
+          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
+        }
+        100% {
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.05);
+        }
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background-color: #fff;
+        color: var(--dark);
+        line-height: 1.6;
+        background-image: radial-gradient(rgba(0, 0, 0, 0.02) 0.8px, transparent 0.8px),
+          radial-gradient(rgba(0, 0, 0, 0.012) 0.8px, transparent 0.8px);
+        background-size: 65px 65px, 85px 85px;
+        animation: bodyFadeIn 1s ease-out both;
+      }
+
+      .lang-switcher {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        gap: 0.35rem;
+        z-index: 10;
+      }
+
+      .lang-switcher button {
+        border: none;
+        background: rgba(255, 255, 255, 0.85);
+        color: var(--dark);
+        font-weight: 600;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .lang-switcher button.active,
+      .lang-switcher button:hover {
+        background: var(--yellow);
+        transform: translateY(-2px);
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: "Anton", "Inter", sans-serif;
+        letter-spacing: 0.02em;
+        margin: 0 0 0.5rem;
+        text-transform: uppercase;
+      }
+
+      p {
+        margin: 0 0 1rem;
+        color: var(--muted);
+      }
+
+      .section-title {
+        display: inline-block;
+        background: var(--yellow);
+        color: var(--dark);
+        padding: 0.2rem 0.9rem;
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        border-radius: 999px;
+        margin-bottom: 1rem;
+      }
+
+      .content-wrapper {
+        width: min(1100px, 92vw);
+        margin: 0 auto;
+        padding: 3rem 0;
+      }
+
+      header.hero {
+        position: relative;
+        background-image: linear-gradient(rgba(8, 6, 3, 0.6), rgba(8, 6, 3, 0.55)),
+          url("Naan.jpg");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        padding: 4.5rem 0 5rem;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+        opacity: 0.3;
+        mix-blend-mode: screen;
+      }
+
+      .hero-content {
+        position: relative;
+        width: min(900px, 92vw);
+        margin: 0 auto;
+        z-index: 1;
+        animation: floatUp 1s ease-out both;
+      }
+
+      .phone-banner {
+        display: inline-block;
+        background-color: var(--yellow);
+        color: var(--dark);
+        font-weight: 700;
+        padding: 0.6rem 1.4rem;
+        border-radius: 999px;
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        box-shadow: 0 15px 40px rgba(247, 201, 72, 0.35);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        text-decoration: none;
+      }
+
+      .phone-banner:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 20px 45px rgba(247, 201, 72, 0.45);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 6vw, 3.8rem);
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        color: #f7f3ea;
+      }
+
+      .hero-subtext {
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-top: 1.5rem;
+        color: #fff9ef;
+      }
+
+      .about {
+        background-color: var(--off-white);
+        border-radius: 28px;
+        padding: 2.5rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.06);
+        animation: floatUp 0.9s ease both;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .about-card {
+        background: #fff;
+        border-radius: 22px;
+        padding: 1.6rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+      }
+
+      .live-map {
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 26px 50px rgba(0, 0, 0, 0.08);
+        border: 4px solid #fff;
+      }
+
+      .live-map iframe {
+        width: 100%;
+        height: 340px;
+        border: 0;
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .menu-card {
+        background: #fff;
+        border: 2px solid var(--yellow);
+        border-radius: 22px;
+        padding: 1.5rem;
+        min-height: 220px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.04);
+        animation: floatUp 0.9s ease both;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      .menu-card:nth-child(odd) {
+        animation-delay: 0.1s;
+      }
+
+      .menu-card:nth-child(even) {
+        animation-delay: 0.2s;
+      }
+
+      .menu-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+      }
+
+      .menu-card h3 {
+        color: var(--dark);
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+      }
+
+      .menu-card .item-number {
+        font-size: 1.1rem;
+        color: var(--deep-yellow);
+      }
+
+      .menu-card span {
+        display: block;
+        font-weight: 600;
+        color: var(--deep-yellow);
+        margin-bottom: 0.5rem;
+      }
+
+      .menu-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .menu-card li {
+        margin-bottom: 0.4rem;
+        color: var(--muted);
+      }
+
+      .menu-photos {
+        margin-top: 2.5rem;
+      }
+
+      .menu-photo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+
+      .menu-photo {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 4px solid #fff;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        position: relative;
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+        animation: floatUp 1s ease both;
+      }
+
+      .menu-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 2px solid rgba(247, 201, 72, 0.7);
+        pointer-events: none;
+        border-radius: 14px;
+        margin: 0.35rem;
+      }
+
+      .menu-photo img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .menu-photo span {
+        display: block;
+        padding: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--dark);
+        background: #fff;
+      }
+
+      .menu-photo:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 26px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .menu-photo:hover img {
+        transform: scale(1.05);
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .gallery-grid img {
+        border-radius: 24px;
+        border: 3px solid #fff;
+        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.09);
+        height: 230px;
+        object-fit: cover;
+        filter: saturate(1.05);
+        transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+      }
+
+      .gallery-grid img:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.15);
+        filter: saturate(1.15);
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .info-card {
+        background: #fff;
+        border-radius: 22px;
+        padding: 2rem;
+        border: 2px solid rgba(247, 201, 72, 0.4);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
+        animation: floatUp 1s ease both;
+      }
+
+      .info-card h3 {
+        margin-bottom: 1rem;
+      }
+
+      .info-detail {
+        margin-bottom: 0.7rem;
+        font-weight: 600;
+      }
+
+      .info-phone {
+        font-size: 1.3rem;
+        color: var(--deep-yellow);
+      }
+
+      .map iframe {
+        width: 100%;
+        border-radius: 22px;
+        border: 4px solid #fff;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+      }
+
+      .map iframe:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 28px 55px rgba(0, 0, 0, 0.12);
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 1rem 3rem;
+        background: #fff;
+        border-top: 4px solid rgba(247, 201, 72, 0.5);
+      }
+
+      footer .footer-phone {
+        font-weight: 700;
+        color: var(--deep-yellow);
+        margin-top: 0.5rem;
+      }
+
+      @media (min-width: 900px) {
+        .menu-section {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          gap: 2.5rem;
+          align-items: start;
+        }
+
+        .about-grid {
+          grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        .menu-photo-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .menu-photo img {
+          height: 170px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="lang-switcher">
+      <button type="button" data-lang-switch="fr" class="active">FR</button>
+      <button type="button" data-lang-switch="es">ES</button>
+      <button type="button" data-lang-switch="en">EN</button>
+    </div>
+    <header class="hero">
+      <div class="hero-content">
+        <a class="phone-banner" id="ctaPhone" href="tel:+33979138543">Appeler +33979138543</a>
+        <h1 id="heroTitle">TACO NAAN<br> STREET FOOD FAIT MAISON À DAX</h1>
+        <p id="heroTagline">Naans, tacos, burgers et assiettes faits avec amour.</p>
+        <div class="hero-subtext" id="heroSubtext">Fresh | Bold | Maison</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="content-wrapper">
+        <div class="section-title" id="chezSectionLabel">CHEZ NOUS</div>
+        <div class="about">
+          <div class="about-grid">
+            <div class="about-card">
+              <h3 id="chezHeading">CHEZ NOUS</h3>
+              <p id="chezParagraph">
+                “Un petit aperçu de l’univers Taco Naan : du fait-maison, des recettes généreuses et une ambiance simple où l’on se sent bien. Et si vous voulez nous soutenir,
+                n’hésitez pas à partager votre avis.”
+              </p>
+              <p id="chezDetails">
+                Adresse : 125 Cours Victor Hugo, 40100 Dax <br /> Horaires : 11:30 – 15:00 / 18:00 – 23:30. <br />
+                Téléphone : +33979138543.
+              </p>
+            </div>
+            <div class="live-map" data-source="https://maps.app.goo.gl/U6Kzt3UdhnooXdZB6">
+              <iframe
+                title="Google Maps Taco Naan Dax"
+                src="https://maps.google.com/maps?q=125%20Cours%20Victor%20Hugo%2C%2040100%20Dax&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-wrapper">
+        <div class="section-title" id="menuTitle">MENU SIGNATURE</div>
+        <div class="menu-section">
+          <div>
+            <div class="menu-grid">
+              <article class="menu-card">
+                <h3><span class="item-number">01.</span> Cheese Naan</h3>
+                <span>À partir de 6 €</span>
+                <ul>
+                  <li>Naan Kebab</li>
+                  <li>Naan Spécial</li>
+                  <li>Naan Américain</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3><span class="item-number">02.</span> Tacos aux choix</h3>
+                <span>Sauce gruyère maison</span>
+                <ul>
+                  <li>Simple</li>
+                  <li>Double</li>
+                  <li>Triple</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3><span class="item-number">03.</span> Kebab Bowl</h3>
+                <span>savoir faire unique</span>
+                <ul>
+                  <li>Viande + crudités</li>
+                  <li>Frites ou riz</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3><span class="item-number">04.</span> Poulet Crousty Riz</h3>
+                <span>Ici, on fait les choses à notre façon</span>
+                <ul>
+                  <li>Riz parfumé</li>
+                  <li>Poulet croustillant</li>
+                  <li>Sauce signature</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3><span class="item-number">05.</span> Burgers Maison</h3>
+                <span>Recettes généreuses</span>
+                <ul>
+                  <li>Cheeseburger</li>
+                  <li>Chicken Burger</li>
+                  <li>Double Cheese</li>
+                  <li>Supreme Burger</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3><span class="item-number">06.</span> Assiettes</h3>
+                <span>À partir de 10 €</span>
+                <ul>
+                  <li>Pain naan maison</li>
+                  <li>Choix kebab, poulet tikka, merguez, falafel…</li>
+                  <li>Accompagnements généreux</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3><span class="item-number">07.</span> Menu Enfant</h3>
+                <span>Happy box Taco Naan</span>
+                <ul>
+                  <li>Kebab ou nuggets</li>
+                  <li>Frites + boisson</li>
+                  <li>Sucette, ballon & surprise</li>
+                </ul>
+              </article>
+              <article class="menu-card">
+                <h3>Tex Mex & Snacks</h3>
+                <span>À partir de 5 €</span>
+                <ul>
+                  <li>Nuggets croustillants</li>
+                  <li>Mozza Sticks</li>
+                  <li>Camembert pané</li>
+                  <li>Falafel & dips</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+          <div class="menu-photos">
+            <div class="menu-photo-grid">
+              <figure class="menu-photo">
+                <img
+                  src="Naan.jpg"
+                  alt="Cheese naan fait maison"
+                />
+                <span>Cheese Naan</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="tacos.jpg"
+                  alt="Tacos croustillant"
+                />
+                <span>Tacos</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="bowl.jpg"
+                  alt="Bol de kebab maison"
+                />
+                <span>Kebab Bowl</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="rizzz.png"
+                  alt="Poulet croustillant et riz"
+                />
+                <span>Poulet Riz</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="berger.jpg"
+                  alt="Burger maison"
+                />
+                <span>Burgers</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="assiette.png"
+                  alt="Assiette complète Taco Naan"
+                />
+                <span>Assiettes</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="texmex.jpg"
+                  alt="Tex Mex croustillant"
+                />
+                <span>Tex Mex</span>
+              </figure>
+              <figure class="menu-photo">
+                <img
+                  src="mini.jpg"
+                  alt="Menu enfant Taco Naan"
+                />
+                <span>Menu Enfant</span>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-wrapper">
+        <div class="section-title" id="aboutTitle">À PROPOS</div>
+        <div class="about">
+          <p id="aboutText">
+            « Chez Taco Naan, on revisite la street-food à la française. Pain naan fait
+            maison, viande grillée à la perfection, sauces onctueuses et portions
+            généreuses — tout est préparé sur place, avec le vrai goût du fait maison. »
+          </p>
+        </div>
+      </section>
+
+      <section class="content-wrapper">
+        <div class="section-title" id="galleryTitle">GALERIE</div>
+        <div class="gallery-grid">
+          <img src="Naan.jpg" alt="Cheese naan taco naan" />
+          <img src="tacos.jpg" alt="Tacos croustillants" />
+          <img src="bowl.jpg" alt="Kebab bowl coloré" />
+          <img src="rizzz.png" alt="Poulet crousty riz" />
+          <img src="berger.jpg" alt="Burger généreux" />
+          <img src="texmex.jpg" alt="Sélection Tex Mex" />
+          <img src="assiette.png" alt="Assiette complète Taco Naan" />
+          <img src="mini.jpg" alt="Menu enfant happy box" />
+        </div>
+      </section>
+
+      <section class="content-wrapper">
+        <div class="section-title" id="infoTitle">DAX</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Taco Naan</h3>
+            <div class="info-detail">125 Cours Victor Hugo, 40100 Dax</div>
+            <div class="info-detail" id="infoHours">Horaires : 11:30 – 15:00 / 18:00 – 23:30</div>
+            <div class="info-detail info-phone" id="infoPhone">Téléphone : +33 9 79 13 85 43</div>
+          </div>
+          <div class="map">
+            <iframe
+              title="Carte Taco Naan Dax"
+              src="https://maps.google.com/maps?q=125%20Cours%20Victor%20Hugo%2C%2040100%20Dax&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              style="border: 0; width: 100%; height: 320px; border-radius: 22px;"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footerText">© 2025 Taco Naan – Street Food Dax – Fait Maison</p>
+      <a class="footer-phone" id="footerPhone" href="tel:+33979138543">Commandes : +33979138543</a>
+    </footer>
+    <script>
+      const translations = {
+        fr: {
+          heroTitle: 'TACO NAAN<br> STREET FOOD FAIT MAISON À DAX',
+          heroTagline: 'Naans, tacos, burgers et assiettes faits avec amour.',
+          heroSubtext: 'Fresh | Bold | Maison',
+          ctaPhone: 'Appeler +33979138543',
+          chezSectionLabel: 'CHEZ NOUS',
+          chezHeading: 'CHEZ NOUS',
+          chezParagraph:
+            '“Un petit aperçu de l’univers Taco Naan : du fait-maison, des recettes généreuses et une ambiance simple où l’on se sent bien. Et si vous voulez nous soutenir, n’hésitez pas à partager votre avis.”',
+          chezDetails:
+            'Adresse : 125 Cours Victor Hugo, 40100 Dax <br /> Horaires : 11:30 – 15:00 / 18:00 – 23:30. <br /> Téléphone : +33979138543.',
+          menuTitle: 'MENU SIGNATURE',
+          aboutTitle: 'À PROPOS',
+          aboutText:
+            '« Chez Taco Naan, on revisite la street-food à la française. Pain naan fait maison, viande grillée à la perfection, sauces onctueuses et portions généreuses — tout est préparé sur place, avec le vrai goût du fait maison. »',
+          galleryTitle: 'GALERIE',
+          infoTitle: 'DAX',
+          infoHours: 'Horaires : 11:30 – 15:00 / 18:00 – 23:30',
+          infoPhone: 'Téléphone : +33 9 79 13 85 43',
+          footerText: '© 2025 Taco Naan – Street Food Dax – Fait Maison',
+          footerPhone: 'Commandes : +33979138543'
+        },
+        es: {
+          heroTitle: 'TACO NAAN<br> STREET FOOD CASERO EN DAX',
+          heroTagline: 'Naans, tacos, hamburguesas y platos hechos con amor.',
+          heroSubtext: 'Fresco | Atrevido | Casero',
+          ctaPhone: 'Llamar +33979138543',
+          chezSectionLabel: 'EN CASA',
+          chezHeading: 'EN CASA',
+          chezParagraph:
+            '“Una mirada al universo Taco Naan: casero, generoso y con un ambiente sencillo donde te sientes bien. Si quieres apoyarnos, comparte tu opinión.”',
+          chezDetails:
+            'Dirección: 125 Cours Victor Hugo, 40100 Dax <br /> Horario: 11:30 – 15:00 / 18:00 – 23:30. <br /> Teléfono: +33979138543.',
+          menuTitle: 'MENÚ FIRMA',
+          aboutTitle: 'SOBRE NOSOTROS',
+          aboutText:
+            '« En Taco Naan reinventamos la street-food a la francesa. Pan naan casero, carne a la parrilla, salsas cremosas y porciones generosas: todo se prepara en el momento con auténtico sabor casero. »',
+          galleryTitle: 'GALERÍA',
+          infoTitle: 'DAX',
+          infoHours: 'Horario: 11:30 – 15:00 / 18:00 – 23:30',
+          infoPhone: 'Teléfono: +33 9 79 13 85 43',
+          footerText: '© 2025 Taco Naan – Street Food Dax – Hecho en Casa',
+          footerPhone: 'Pedidos: +33979138543'
+        },
+        en: {
+          heroTitle: 'TACO NAAN<br> HOMEMADE STREET FOOD IN DAX',
+          heroTagline: 'Naans, tacos, burgers, and plates made with love.',
+          heroSubtext: 'Fresh | Bold | Homemade',
+          ctaPhone: 'Call +33979138543',
+          chezSectionLabel: 'AT OUR PLACE',
+          chezHeading: 'AT OUR PLACE',
+          chezParagraph:
+            '“A glimpse into the Taco Naan universe: homemade breads, generous recipes, and a simple vibe where everyone feels good. Want to support us? Share your review.”',
+          chezDetails:
+            'Address: 125 Cours Victor Hugo, 40100 Dax <br /> Hours: 11:30 – 15:00 / 18:00 – 23:30. <br /> Phone: +33979138543.',
+          menuTitle: 'SIGNATURE MENU',
+          aboutTitle: 'ABOUT',
+          aboutText:
+            '“At Taco Naan we reinvent French street food. Homemade naan, perfectly grilled meats, silky sauces, and generous portions — everything is prepared on site with true homemade flavor.”',
+          galleryTitle: 'GALLERY',
+          infoTitle: 'DAX',
+          infoHours: 'Hours: 11:30 – 15:00 / 18:00 – 23:30',
+          infoPhone: 'Phone: +33 9 79 13 85 43',
+          footerText: '© 2025 Taco Naan – Dax Street Food – Homemade',
+          footerPhone: 'Orders: +33979138543'
+        }
+      };
+
+      const langButtons = document.querySelectorAll('[data-lang-switch]');
+
+      function setLanguage(lang) {
+        const strings = translations[lang];
+        Object.keys(strings).forEach((key) => {
+          const el = document.getElementById(key);
+          if (el) {
+            el.innerHTML = strings[key];
+          }
+        });
+        document.documentElement.setAttribute('lang', lang);
+        langButtons.forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.langSwitch === lang);
+        });
+      }
+
+      langButtons.forEach((btn) =>
+        btn.addEventListener('click', () => setLanguage(btn.dataset.langSwitch))
+      );
+
+      setLanguage('fr');
+    </script>
+  </body>
+</html>
