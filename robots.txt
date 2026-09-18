@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sakkalkousay-source.github.io/taconaansite/sitemap.xml

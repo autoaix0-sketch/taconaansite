@@ -1,786 +1,466 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taco Naan Street Food Dax</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --yellow: #f7c948;
-        --deep-yellow: #c88c0f;
-        --dark: #1d1a16;
-        --muted: #68635a;
-        --off-white: #fdf9f2;
-      }
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-      * {
-        box-sizing: border-box;
-      }
+<title>Taco Naan — Kebab, naan et tacos faits maison à Dax</title>
+<meta name="description" content="Pain naan pétri et cuit sur place, viande grillée à la commande, tacos, burgers et assiettes. 38 avenue Saint-Vincent de Paul à Dax. Halal, sur place et à emporter, commande au 09 79 13 85 43. Nous ne livrons pas.">
+<link rel="canonical" href="https://sakkalkousay-source.github.io/taconaansite/">
 
-      @keyframes bodyFadeIn {
-        from {
-          opacity: 0;
-          filter: blur(6px);
-        }
-        to {
-          opacity: 1;
-          filter: blur(0);
-        }
-      }
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Taco Naan">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Taco Naan — Kebab, naan et tacos faits maison à Dax">
+<meta property="og:description" content="Le pain naan est pétri et cuit sur place. La viande est grillée à la commande. Sur place et à emporter — 09 79 13 85 43.">
+<meta property="og:url" content="https://sakkalkousay-source.github.io/taconaansite/">
+<meta property="og:image" content="https://sakkalkousay-source.github.io/taconaansite/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0c0c">
 
-      @keyframes floatUp {
-        from {
-          opacity: 0;
-          transform: translateY(35px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+<link rel="icon" href="assets/img/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 
-      @keyframes slowGlow {
-        0% {
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.05);
-        }
-        50% {
-          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
-        }
-        100% {
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.05);
-        }
-      }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/logo-white-320.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css?v=15">
 
-      body {
-        margin: 0;
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background-color: #fff;
-        color: var(--dark);
-        line-height: 1.6;
-        background-image: radial-gradient(rgba(0, 0, 0, 0.02) 0.8px, transparent 0.8px),
-          radial-gradient(rgba(0, 0, 0, 0.012) 0.8px, transparent 0.8px);
-        background-size: 65px 65px, 85px 85px;
-        animation: bodyFadeIn 1s ease-out both;
-      }
+<!-- Fiche établissement pour Google.
 
-      .lang-switcher {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        display: flex;
-        gap: 0.35rem;
-        z-index: 10;
-      }
+     Volontairement SANS aggregateRating : un balisage d'avis auto-déclaré sur
+     son propre site est contraire aux consignes de Google et peut coûter
+     l'affichage enrichi. La note 4,5 est affichée visuellement, sourcée, avec
+     un lien vers la fiche Google — l'effet de confiance est le même, sans le
+     risque. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Taco Naan",
+  "url": "https://sakkalkousay-source.github.io/taconaansite/",
+  "image": "https://sakkalkousay-source.github.io/taconaansite/assets/img/og.jpg",
+  "telephone": "+33979138543",
+  "priceRange": "€",
+  "servesCuisine": ["Kebab", "Street food", "Tacos", "Burgers", "Halal"],
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Espèces, Carte bancaire",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "38 Avenue Saint-Vincent de Paul",
+    "addressLocality": "Dax",
+    "postalCode": "40100",
+    "addressRegion": "Nouvelle-Aquitaine",
+    "addressCountry": "FR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 43.714857, "longitude": -1.0540135 },
+  "hasMap": "https://www.google.com/maps/place/?cid=14156280289773585904",
+  "sameAs": ["https://www.instagram.com/taco_naan_dax/"],
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "11:30", "closes": "15:00" },
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "18:00", "closes": "23:30" }
+  ],
+  "acceptsReservations": false,
+  "publicAccess": true
+}
+</script>
+</head>
 
-      .lang-switcher button {
-        border: none;
-        background: rgba(255, 255, 255, 0.85);
-        color: var(--dark);
-        font-weight: 600;
-        padding: 0.35rem 0.75rem;
-        border-radius: 999px;
-        cursor: pointer;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-        transition: transform 0.2s ease, background 0.2s ease;
-      }
+<body>
+<a class="skip" href="#top" data-i18n="skip">Aller au contenu</a>
 
-      .lang-switcher button.active,
-      .lang-switcher button:hover {
-        background: var(--yellow);
-        transform: translateY(-2px);
-      }
+<!-- ======================================================= barre supérieure -->
+<header class="topbar" data-stuck="false">
+  <a class="topbar__mark" href="#top" aria-label="Taco Naan">
+    <img src="assets/img/logo-white-320.webp"
+         srcset="assets/img/logo-white-320.webp 320w, assets/img/logo-white-640.webp 640w"
+         sizes="5.4rem" width="320" height="197" alt="Taco Naan" fetchpriority="high">
+  </a>
 
-      img {
-        max-width: 100%;
-        display: block;
-      }
+  <nav class="topbar__nav" aria-label="Navigation">
+    <a href="#carte"   data-i18n="nav.carte">La carte</a>
+    <a href="#panneaux" data-i18n="boards.eyebrow">La carte au comptoir</a>
+    <a href="#avis"    data-i18n="nav.avis">Les avis</a>
+    <a href="#venir"   data-i18n="nav.venir">Nous trouver</a>
+  </nav>
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5 {
-        font-family: "Anton", "Inter", sans-serif;
-        letter-spacing: 0.02em;
-        margin: 0 0 0.5rem;
-        text-transform: uppercase;
-      }
-
-      p {
-        margin: 0 0 1rem;
-        color: var(--muted);
-      }
-
-      .section-title {
-        display: inline-block;
-        background: var(--yellow);
-        color: var(--dark);
-        padding: 0.2rem 0.9rem;
-        font-size: 0.9rem;
-        letter-spacing: 0.1em;
-        border-radius: 999px;
-        margin-bottom: 1rem;
-      }
-
-      .content-wrapper {
-        width: min(1100px, 92vw);
-        margin: 0 auto;
-        padding: 3rem 0;
-      }
-
-      header.hero {
-        position: relative;
-        background-image: linear-gradient(rgba(8, 6, 3, 0.6), rgba(8, 6, 3, 0.55)),
-          url("Naan.jpg");
-        background-size: cover;
-        background-position: center;
-        color: #fff;
-        padding: 4.5rem 0 5rem;
-        text-align: center;
-        overflow: hidden;
-      }
-
-      .hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
-        opacity: 0.3;
-        mix-blend-mode: screen;
-      }
-
-      .hero-content {
-        position: relative;
-        width: min(900px, 92vw);
-        margin: 0 auto;
-        z-index: 1;
-        animation: floatUp 1s ease-out both;
-      }
-
-      .phone-banner {
-        display: inline-block;
-        background-color: var(--yellow);
-        color: var(--dark);
-        font-weight: 700;
-        padding: 0.6rem 1.4rem;
-        border-radius: 999px;
-        margin-bottom: 1.5rem;
-        font-size: 1.1rem;
-        box-shadow: 0 15px 40px rgba(247, 201, 72, 0.35);
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        text-decoration: none;
-      }
-
-      .phone-banner:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 20px 45px rgba(247, 201, 72, 0.45);
-      }
-
-      .hero h1 {
-        font-size: clamp(2.4rem, 6vw, 3.8rem);
-      }
-
-      .hero p {
-        font-size: 1.1rem;
-        color: #f7f3ea;
-      }
-
-      .hero-subtext {
-        font-size: 1rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        margin-top: 1.5rem;
-        color: #fff9ef;
-      }
-
-      .about {
-        background-color: var(--off-white);
-        border-radius: 28px;
-        padding: 2.5rem;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.06);
-        animation: floatUp 0.9s ease both;
-      }
-
-      .about-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .about-card {
-        background: #fff;
-        border-radius: 22px;
-        padding: 1.6rem;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
-      }
-
-      .live-map {
-        border-radius: 22px;
-        overflow: hidden;
-        box-shadow: 0 26px 50px rgba(0, 0, 0, 0.08);
-        border: 4px solid #fff;
-      }
-
-      .live-map iframe {
-        width: 100%;
-        height: 340px;
-        border: 0;
-      }
-
-      .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-      }
-
-      .menu-card {
-        background: #fff;
-        border: 2px solid var(--yellow);
-        border-radius: 22px;
-        padding: 1.5rem;
-        min-height: 220px;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.04);
-        animation: floatUp 0.9s ease both;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-      }
-
-      .menu-card:nth-child(odd) {
-        animation-delay: 0.1s;
-      }
-
-      .menu-card:nth-child(even) {
-        animation-delay: 0.2s;
-      }
-
-      .menu-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
-      }
-
-      .menu-card h3 {
-        color: var(--dark);
-        display: flex;
-        align-items: baseline;
-        gap: 0.4rem;
-      }
-
-      .menu-card .item-number {
-        font-size: 1.1rem;
-        color: var(--deep-yellow);
-      }
-
-      .menu-card span {
-        display: block;
-        font-weight: 600;
-        color: var(--deep-yellow);
-        margin-bottom: 0.5rem;
-      }
-
-      .menu-card ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .menu-card li {
-        margin-bottom: 0.4rem;
-        color: var(--muted);
-      }
-
-      .menu-photos {
-        margin-top: 2.5rem;
-      }
-
-      .menu-photo-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1rem;
-      }
-
-      .menu-photo {
-        background: #fff;
-        border-radius: 18px;
-        overflow: hidden;
-        border: 4px solid #fff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-        position: relative;
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
-        animation: floatUp 1s ease both;
-      }
-
-      .menu-photo::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 2px solid rgba(247, 201, 72, 0.7);
-        pointer-events: none;
-        border-radius: 14px;
-        margin: 0.35rem;
-      }
-
-      .menu-photo img {
-        width: 100%;
-        height: 140px;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-      }
-
-      .menu-photo span {
-        display: block;
-        padding: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--dark);
-        background: #fff;
-      }
-
-      .menu-photo:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 26px 40px rgba(0, 0, 0, 0.12);
-      }
-
-      .menu-photo:hover img {
-        transform: scale(1.05);
-      }
-
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
-      }
-
-      .gallery-grid img {
-        border-radius: 24px;
-        border: 3px solid #fff;
-        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.09);
-        height: 230px;
-        object-fit: cover;
-        filter: saturate(1.05);
-        transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
-      }
-
-      .gallery-grid img:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.15);
-        filter: saturate(1.15);
-      }
-
-      .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 2rem;
-        align-items: center;
-      }
-
-      .info-card {
-        background: #fff;
-        border-radius: 22px;
-        padding: 2rem;
-        border: 2px solid rgba(247, 201, 72, 0.4);
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
-        animation: floatUp 1s ease both;
-      }
-
-      .info-card h3 {
-        margin-bottom: 1rem;
-      }
-
-      .info-detail {
-        margin-bottom: 0.7rem;
-        font-weight: 600;
-      }
-
-      .info-phone {
-        font-size: 1.3rem;
-        color: var(--deep-yellow);
-      }
-
-      .map iframe {
-        width: 100%;
-        border-radius: 22px;
-        border: 4px solid #fff;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
-      }
-
-      .map iframe:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 28px 55px rgba(0, 0, 0, 0.12);
-      }
-
-      footer {
-        text-align: center;
-        padding: 2rem 1rem 3rem;
-        background: #fff;
-        border-top: 4px solid rgba(247, 201, 72, 0.5);
-      }
-
-      footer .footer-phone {
-        font-weight: 700;
-        color: var(--deep-yellow);
-        margin-top: 0.5rem;
-      }
-
-      @media (min-width: 900px) {
-        .menu-section {
-          display: grid;
-          grid-template-columns: 1.2fr 1fr;
-          gap: 2.5rem;
-          align-items: start;
-        }
-
-        .about-grid {
-          grid-template-columns: 1.1fr 0.9fr;
-        }
-
-        .menu-photo-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .menu-photo img {
-          height: 170px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="lang-switcher">
-      <button type="button" data-lang-switch="fr" class="active">FR</button>
-      <button type="button" data-lang-switch="es">ES</button>
-      <button type="button" data-lang-switch="en">EN</button>
+  <div class="topbar__end">
+    <div class="lang" role="group" aria-label="Langue · Idioma · Language">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
-    <header class="hero">
-      <div class="hero-content">
-        <a class="phone-banner" id="ctaPhone" href="tel:+33979138543">Appeler 09 79 13 85 43</a>
-        <h1 id="heroTitle">TACO NAAN<br> STREET FOOD FAIT MAISON À DAX</h1>
-        <p id="heroTagline">Naans, tacos, burgers et assiettes faits avec amour.</p>
-        <div class="hero-subtext" id="heroSubtext">Fresh | Bold | Maison</div>
+    <a class="btn" href="tel:+33979138543">
+      <span data-i18n="nav.call">Appeler</span>
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- =================================================================== hero -->
+  <section class="hero">
+    <!-- Vidéo tournée en cuisine. Muette, en boucle, sans contrôles : c'est
+         un décor, pas un lecteur. L'affiche s'affiche pendant le chargement
+         et remplace la vidéo là où l'autoplay est refusé.
+
+         Ni autoplay ni preload ici, volontairement : c'est site.js qui
+         décide, en appelant play(). Sur un téléphone il ne l'appelle jamais —
+         le dégradé du hero couvre la vidéo à 96 % du côté du texte, et l'écran
+         est trop étroit pour qu'il en reste quelque chose à voir. Autant ne
+         pas faire payer 337 Ko pour ça ; l'affiche en fait 37.
+
+         L'attribut autoplay devait disparaître du HTML : il l'emporte sur
+         preload="none" et lançait le téléchargement avant que le script ait
+         eu son mot à dire. -->
+    <video class="hero__video" muted loop playsinline
+           preload="none" poster="assets/video/hero-poster.jpg"
+           aria-hidden="true" tabindex="-1">
+      <source src="assets/video/hero-960.webm" type="video/webm">
+      <source src="assets/video/hero-720.mp4" type="video/mp4">
+    </video>
+
+    <div class="wrap hero__grid">
+      <div>
+        <img class="hero__stamp"
+             src="assets/img/logo-white-320.webp"
+             srcset="assets/img/logo-white-320.webp 320w, assets/img/logo-white-640.webp 640w"
+             sizes="(min-width: 62rem) 11rem, 30vw"
+             width="320" height="197"
+             alt="Taco Naan — un savoir-faire unique">
+
+        <p class="hero__kicker" data-i18n="hero.kicker">Dax · Avenue Saint-Vincent de Paul</p>
+
+        <h1>
+          <span data-i18n="hero.t1">Kebab, naan, tacos.</span>
+          <em data-i18n="hero.t2">Faits ici, à Dax.</em>
+        </h1>
+
+        <p class="hero__lede" data-i18n-html="hero.lede">
+          Le pain naan est pétri et cuit sur place. La viande est grillée à la
+          commande. <strong>On ne livre pas</strong> : vous appelez, vous passez,
+          c’est prêt.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn" href="tel:+33979138543">
+            <span data-i18n="hero.cta">Commander · 09 79 13 85 43</span>
+          </a>
+          <span class="status" data-status></span>
+        </div>
+
+        <ul class="facts">
+          <li data-strong>Halal</li>
+          <li data-i18n="fact.1">Sur place &amp; à emporter</li>
+          <li data-strong data-i18n="fact.3">Pas de livraison</li>
+          <li data-i18n="fact.4">Ouvert 7j/7</li>
+        </ul>
       </div>
-    </header>
 
-    <main>
-      <section class="content-wrapper">
-        <div class="section-title" id="chezSectionLabel">CHEZ NOUS</div>
-        <div class="about">
-          <div class="about-grid">
-            <div class="about-card">
-              <h3 id="chezHeading">CHEZ NOUS</h3>
-              <p id="chezParagraph">
-                “Un petit aperçu de l’univers Taco Naan : du fait-maison, des recettes généreuses et une ambiance simple où l’on se sent bien. Et si vous voulez nous soutenir,
-                n’hésitez pas à partager votre avis.”
-              </p>
-              <p id="chezDetails">
-                Adresse : 38 Av. Saint-Vincent de Paul, 40100 Dax, France <br /> Horaires : 11:30 – 15:00 / 18:00 – 23:30. <br />
-                Téléphone : 09 79 13 85 43.
-              </p>
-            </div>
-            <div class="live-map" data-source="https://maps.app.goo.gl/U6Kzt3UdhnooXdZB6">
-              <iframe
-                title="Google Maps Taco Naan Dax"
-                src="https://maps.google.com/maps?q=38%20Av.%20Saint-Vincent%20de%20Paul%2C%2040100%20Dax%2C%20France&output=embed"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div class="hero__aside">
+        <figure class="hero__cutout">
+          <picture>
+            <source type="image/avif"
+                    srcset="assets/img/naan-hero-480.avif 480w, assets/img/naan-hero-960.avif 960w"
+                    sizes="(min-width: 62rem) 36rem, 86vw">
+            <img src="assets/img/naan-hero-960.webp"
+                 srcset="assets/img/naan-hero-480.webp 480w, assets/img/naan-hero-960.webp 960w"
+                 sizes="(min-width: 62rem) 36rem, 86vw"
+                 width="960" height="828"
+                 data-i18n-aria="hero.alt"
+                 alt="Naan kebab garni, prêt à emporter" fetchpriority="high">
+          </picture>
+        </figure>
 
-      <section class="content-wrapper">
-        <div class="section-title" id="menuTitle">MENU SIGNATURE</div>
-        <div class="menu-section">
-          <div>
-            <div class="menu-grid">
-              <article class="menu-card">
-                <h3><span class="item-number">01.</span> Cheese Naan</h3>
-                <span>À partir de 6 €</span>
-                <ul>
-                  <li>Naan Kebab</li>
-                  <li>Naan Spécial</li>
-                  <li>Naan Américain</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3><span class="item-number">02.</span> Tacos aux choix</h3>
-                <span>Sauce gruyère maison</span>
-                <ul>
-                  <li>Simple</li>
-                  <li>Double</li>
-                  <li>Triple</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3><span class="item-number">03.</span> Kebab Bowl</h3>
-                <span>savoir faire unique</span>
-                <ul>
-                  <li>Viande + crudités</li>
-                  <li>Frites ou riz</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3><span class="item-number">04.</span> Poulet Crousty Riz</h3>
-                <span>Ici, on fait les choses à notre façon</span>
-                <ul>
-                  <li>Riz parfumé</li>
-                  <li>Poulet croustillant</li>
-                  <li>Sauce signature</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3><span class="item-number">05.</span> Burgers Maison</h3>
-                <span>Recettes généreuses</span>
-                <ul>
-                  <li>Cheeseburger</li>
-                  <li>Chicken Burger</li>
-                  <li>Double Cheese</li>
-                  <li>Supreme Burger</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3><span class="item-number">06.</span> Assiettes</h3>
-                <span>À partir de 10 €</span>
-                <ul>
-                  <li>Pain naan maison</li>
-                  <li>Choix kebab, poulet tikka, merguez, falafel…</li>
-                  <li>Accompagnements généreux</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3><span class="item-number">07.</span> Menu Enfant</h3>
-                <span>Happy box Taco Naan</span>
-                <ul>
-                  <li>Kebab ou nuggets</li>
-                  <li>Frites + boisson</li>
-                  <li>Sucette, ballon & surprise</li>
-                </ul>
-              </article>
-              <article class="menu-card">
-                <h3>Tex Mex & Snacks</h3>
-                <span>À partir de 5 €</span>
-                <ul>
-                  <li>Nuggets croustillants</li>
-                  <li>Mozza Sticks</li>
-                  <li>Camembert pané</li>
-                  <li>Falafel & dips</li>
-                </ul>
-              </article>
-            </div>
-          </div>
-          <div class="menu-photos">
-            <div class="menu-photo-grid">
-              <figure class="menu-photo">
-                <img
-                  src="naaan.png"
-                  alt="Cheese naan fait maison"
-                />
-                <span>Cheese Naan</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="tacoss.png"
-                  alt="Tacos croustillant"
-                />
-                <span>Tacos</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="bowl.png"
-                  alt="Bol de kebab maison"
-                />
-                <span>Kebab Bowl</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="rizzz.png"
-                  alt="Poulet croustillant et riz"
-                />
-                <span>Poulet Riz</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="berger.jpg"
-                  alt="Burger maison"
-                />
-                <span>Burgers</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="assiette.png"
-                  alt="Assiette complète Taco Naan"
-                />
-                <span>Assiettes</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="texmex.jpg"
-                  alt="Tex Mex croustillant"
-                />
-                <span>Tex Mex</span>
-              </figure>
-              <figure class="menu-photo">
-                <img
-                  src="mini.jpg"
-                  alt="Menu enfant Taco Naan"
-                />
-                <span>Menu Enfant</span>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
+        <a class="score" href="#avis" data-review-read>
+          <span class="score__stars" aria-hidden="true">★★★★★</span>
+          <b class="score__num">4,5</b>
+          <span class="score__meta">
+            <span data-review-count>271</span> <span data-i18n="score.meta">avis Google</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-      <section class="content-wrapper">
-        <div class="section-title" id="aboutTitle">À PROPOS</div>
-        <div class="about">
-          <p id="aboutText">
-            « Chez Taco Naan, on revisite la street-food à la française. Pain naan fait
-            maison, viande grillée à la perfection, sauces onctueuses et portions
-            généreuses — tout est préparé sur place, avec le vrai goût du fait maison. »
+  <!-- =============================================================== bandeau -->
+  <div class="band" aria-hidden="true">
+    <div class="band__track">
+      <span>Cheese Naan</span><span>Tacos</span><span>Kebab Bowl</span>
+      <span>Poulet Crousty</span><span>Burgers</span><span>Assiettes</span>
+      <span>Barquettes</span><span>Tex-Mex</span><span>Halal</span>
+      <span>Cheese Naan</span><span>Tacos</span><span>Kebab Bowl</span>
+      <span>Poulet Crousty</span><span>Burgers</span><span>Assiettes</span>
+      <span>Barquettes</span><span>Tex-Mex</span><span>Halal</span>
+    </div>
+  </div>
+
+  <!-- ============================================================== la carte -->
+  <section class="carte section-pad" id="carte">
+    <div class="wrap">
+      <p class="eyebrow"><b>01</b> <span data-i18n="carte.eyebrow">La carte</span></p>
+
+      <div class="carte__head">
+        <h2 data-i18n="carte.h2">Ce qu’il y a à manger</h2>
+        <p data-i18n="carte.intro">
+          Tout est préparé à la commande. Les prix sont les mêmes sur place et
+          à emporter.
+        </p>
+      </div>
+
+      <!-- Rempli par assets/js/site.js depuis data/menu.js -->
+      <div class="chips" role="group" aria-label="Filtrer la carte"></div>
+      <p class="tier-note"></p>
+      <div class="carte__grid"></div>
+      <div class="extras"></div>
+
+      <p class="price-note" hidden></p>
+    </div>
+  </section>
+
+  <!-- ============================================================ les panneaux -->
+  <section class="boards-section section-pad" id="panneaux">
+    <div class="wrap">
+      <p class="eyebrow"><b>02</b> <span data-i18n="boards.eyebrow">La carte au comptoir</span></p>
+
+      <div class="carte__head">
+        <h2 data-reveal data-i18n="boards.h2">Les mêmes prix qu’en vitrine.</h2>
+        <p data-i18n="boards.intro">
+          Voici nos panneaux, photographiés tels quels. Rien de retouché : ce
+          que vous lisez ici, c’est ce que vous lisez sur place.
+        </p>
+      </div>
+
+      <!-- Rempli par assets/js/site.js depuis assets/img/boards.js -->
+      <div class="boards"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================= la maison -->
+  <section class="maison section-pad" id="maison">
+    <div class="wrap maison__grid">
+      <div class="maison__text" data-reveal>
+        <p class="eyebrow"><b>03</b> <span data-i18n="maison.eyebrow">La maison</span></p>
+        <h2 data-i18n="maison.h2">Un comptoir, pas une chaîne</h2>
+
+        <p data-i18n="maison.p1">
+          On a ouvert avenue Saint-Vincent de Paul pour faire une chose
+          correctement : du pain naan pétri sur place, de la viande grillée au
+          moment où vous la commandez, et des portions qui tiennent au corps.
+        </p>
+        <p data-i18n="maison.p2">
+          Pas de livraison, pas d’application, pas quarante minutes d’attente.
+          Vous appelez, on prépare, vous passez prendre.
+        </p>
+
+        <ul class="proofs">
+          <li>
+            <span>01</span>
+            <div>
+              <b data-i18n="proof.1.t">Le pain, tous les jours</b>
+              <p data-i18n="proof.1.d">Le naan est pétri et cuit ici.</p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <b data-i18n="proof.2.t">Servi vite, servi chaud</b>
+              <p data-i18n="proof.2.d">« Service rapide et cordial » revient dans les avis.</p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <b data-i18n="proof.3.t">Le compte est bon</b>
+              <p data-i18n="proof.3.d">« Les prix sont très abordables ».</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <figure class="shot" data-reveal>
+        <!-- Les AVIF existaient deja sur le disque mais n'etaient pas servis :
+             cette figure etait le seul <img> nu de la page. 43 Ko au lieu de 66. -->
+        <picture>
+          <source type="image/avif"
+                  srcset="assets/img/wraps-480.avif 480w, assets/img/wraps-600.avif 600w"
+                  sizes="(min-width: 58rem) 26rem, 78vw">
+          <img src="assets/img/wraps-600.webp"
+               srcset="assets/img/wraps-480.webp 480w, assets/img/wraps-600.webp 600w"
+               sizes="(min-width: 58rem) 26rem, 78vw"
+               width="600" height="900" loading="lazy" decoding="async"
+               data-i18n-aria="maison.alt"
+               alt="Deux naans garnis sortis du four">
+        </picture>
+        <figcaption data-i18n="maison.caption">Avenue Saint-Vincent de Paul, Dax</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================================================================= avis -->
+  <section class="avis section-pad" id="avis">
+    <div class="wrap">
+      <p class="eyebrow"><b>04</b> <span data-i18n="avis.eyebrow">Les avis</span></p>
+
+      <div class="avis__head">
+        <h2 data-reveal data-i18n="avis.h2">
+          271 personnes ont pris le temps d’écrire.
+        </h2>
+
+        <div data-reveal>
+          <p class="gauge__title" data-i18n="avis.mentions">
+            Ce que les clients citent le plus
           </p>
+          <!-- Mots et compteurs relevés sur la fiche Google, pas des estimations -->
+          <div class="gauge"></div>
         </div>
-      </section>
+      </div>
 
-      <section class="content-wrapper">
-        <div class="section-title" id="galleryTitle">GALERIE</div>
-        <div class="gallery-grid">
-          <img src="naaan.png" alt="Cheese naan taco naan" />
-          <img src="tacoss.png" alt="Tacos croustillants" />
-          <img src="bowl.png" alt="Kebab bowl coloré" />
-          <img src="rizzz.png" alt="Poulet crousty riz" />
-          <img src="berger.jpg" alt="Burger généreux" />
-          <img src="texmex.jpg" alt="Sélection Tex Mex" />
-          <img src="assiette.png" alt="Assiette complète Taco Naan" />
-          <img src="mini.jpg" alt="Menu enfant happy box" />
+      <!-- Rempli par assets/js/site.js depuis data/reviews.js -->
+      <div class="avis__grid"></div>
+
+      <div class="avis__cta">
+        <a class="btn" data-review-write href="#" target="_blank" rel="noopener">
+          <span data-i18n="avis.write">Laisser un avis</span>
+        </a>
+        <a class="btn btn--ghost" data-review-read href="#" target="_blank" rel="noopener">
+          <span data-i18n="avis.read">Voir les 271 avis</span>
+        </a>
+        <p data-i18n="avis.source">
+          Avis repris tels quels de notre fiche Google, relevés le 17 septembre 2026.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= nous trouver -->
+  <section class="venir section-pad" id="venir">
+    <div class="wrap">
+      <p class="eyebrow"><b>05</b> <span data-i18n="venir.eyebrow">Nous trouver</span></p>
+
+      <div class="venir__grid">
+        <div data-reveal>
+          <h2 data-i18n="venir.h2">38 avenue Saint-Vincent de Paul</h2>
+
+          <dl class="infos">
+            <div class="info-row">
+              <dt data-i18n="venir.address">Adresse</dt>
+              <dd>
+                <a href="https://www.google.com/maps/place/?cid=14156280289773585904"
+                   target="_blank" rel="noopener">38 Av. Saint-Vincent de Paul, 40100 Dax</a>
+              </dd>
+            </div>
+
+            <div class="info-row info-row--phone">
+              <dt data-i18n="venir.phone">Téléphone</dt>
+              <dd><a href="tel:+33979138543">09 79 13 85 43</a></dd>
+            </div>
+
+            <div class="info-row">
+              <dt data-i18n="venir.hours">Horaires</dt>
+              <dd>
+                <span class="hours" data-i18n-html="venir.hours.v">
+                  Tous les jours<span>11:30 – 15:00</span><span>18:00 – 23:30</span>
+                </span>
+                <span class="status" data-status></span>
+              </dd>
+            </div>
+
+            <div class="info-row">
+              <dt data-i18n="venir.service">Service</dt>
+              <dd data-i18n="venir.service.v">
+                Sur place et à emporter. Commande par téléphone. Nous ne livrons pas.
+              </dd>
+            </div>
+          </dl>
+
+          <a class="btn btn--ghost venir__route"
+             href="https://www.google.com/maps/dir/?api=1&amp;destination=43.714857,-1.0540135"
+             target="_blank" rel="noopener">
+            <span data-i18n="venir.route">Itinéraire</span>
+          </a>
         </div>
-      </section>
 
-      <section class="content-wrapper">
-        <div class="section-title" id="infoTitle">DAX</div>
-        <div class="info-grid">
-          <div class="info-card">
-            <h3>Taco Naan</h3>
-            <div class="info-detail">38 Av. Saint-Vincent de Paul, 40100 Dax, France</div>
-            <div class="info-detail" id="infoHours">Horaires : 11:30 – 15:00 / 18:00 – 23:30</div>
-            <div class="info-detail info-phone" id="infoPhone">Téléphone : 09 79 13 85 43</div>
+        <div data-reveal>
+          <div class="mapbox">
+            <button class="mapbox__facade" type="button">
+              <b data-i18n="map.title">Ouvrir la carte</b>
+              <span data-i18n="map.sub">Cliquer pour charger</span>
+              <small data-i18n="map.note">
+                La carte Google ne se charge qu’à votre demande : la page reste
+                rapide et aucun traceur ne démarre avant.
+              </small>
+            </button>
           </div>
-          <div class="map">
-            <iframe
-              title="Carte Taco Naan Dax"
-              src="https://maps.google.com/maps?q=38%20Av.%20Saint-Vincent%20de%20Paul%2C%2040100%20Dax%2C%20France&output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              style="border: 0; width: 100%; height: 320px; border-radius: 22px;"
-            ></iframe>
-          </div>
         </div>
-      </section>
-    </main>
+      </div>
 
-    <footer>
-      <p id="footerText">© 2025 Taco Naan – Street Food Dax – Fait Maison</p>
-      <a class="footer-phone" id="footerPhone" href="tel:+33979138543">Commandes : 09 79 13 85 43</a>
-    </footer>
-    <script>
-      const translations = {
-        fr: {
-          heroTitle: 'TACO NAAN<br> STREET FOOD FAIT MAISON À DAX',
-          heroTagline: 'Naans, tacos, burgers et assiettes faits avec amour.',
-          heroSubtext: 'Fresh | Bold | Maison',
-          ctaPhone: 'Appeler 09 79 13 85 43',
-          chezSectionLabel: 'CHEZ NOUS',
-          chezHeading: 'CHEZ NOUS',
-          chezParagraph:
-            '“Un petit aperçu de l’univers Taco Naan : du fait-maison, des recettes généreuses et une ambiance simple où l’on se sent bien. Et si vous voulez nous soutenir, n’hésitez pas à partager votre avis.”',
-          chezDetails:
-            'Adresse : 38 Av. Saint-Vincent de Paul, 40100 Dax, France <br /> Horaires : 11:30 – 15:00 / 18:00 – 23:30. <br /> Téléphone : +33979138543.',
-          menuTitle: 'MENU SIGNATURE',
-          aboutTitle: 'À PROPOS',
-          aboutText:
-            '« Chez Taco Naan, on revisite la street-food à la française. Pain naan fait maison, viande grillée à la perfection, sauces onctueuses et portions généreuses — tout est préparé sur place, avec le vrai goût du fait maison. »',
-          galleryTitle: 'GALERIE',
-          infoTitle: 'DAX',
-          infoHours: 'Horaires : 11:30 – 15:00 / 18:00 – 23:30',
-          infoPhone: 'Téléphone : +33 9 79 13 85 43',
-          footerText: '© 2025 Taco Naan – Street Food Dax – Fait Maison',
-          footerPhone: 'Commandes : +33979138543'
-        },
-        es: {
-          heroTitle: 'TACO NAAN<br> STREET FOOD CASERO EN DAX',
-          heroTagline: 'Naans, tacos, hamburguesas y platos hechos con amor.',
-          heroSubtext: 'Fresco | Atrevido | Casero',
-          ctaPhone: 'Llamar +33979138543',
-          chezSectionLabel: 'EN CASA',
-          chezHeading: 'EN CASA',
-          chezParagraph:
-            '“Una mirada al universo Taco Naan: casero, generoso y con un ambiente sencillo donde te sientes bien. Si quieres apoyarnos, comparte tu opinión.”',
-          chezDetails:
-            'Dirección: 38 Av. Saint-Vincent de Paul, 40100 Dax, France <br /> Horario: 11:30 – 15:00 / 18:00 – 23:30. <br /> Teléfono: +33979138543.',
-          menuTitle: 'MENÚ FIRMA',
-          aboutTitle: 'SOBRE NOSOTROS',
-          aboutText:
-            '« En Taco Naan reinventamos la street-food a la francesa. Pan naan casero, carne a la parrilla, salsas cremosas y porciones generosas: todo se prepara en el momento con auténtico sabor casero. »',
-          galleryTitle: 'GALERÍA',
-          infoTitle: 'DAX',
-          infoHours: 'Horario: 11:30 – 15:00 / 18:00 – 23:30',
-          infoPhone: 'Teléfono: +33 9 79 13 85 43',
-          footerText: '© 2025 Taco Naan – Street Food Dax – Hecho en Casa',
-          footerPhone: 'Pedidos: +33979138543'
-        },
-        en: {
-          heroTitle: 'TACO NAAN<br> HOMEMADE STREET FOOD IN DAX',
-          heroTagline: 'Naans, tacos, burgers, and plates made with love.',
-          heroSubtext: 'Fresh | Bold | Homemade',
-          ctaPhone: 'Call +33979138543',
-          chezSectionLabel: 'AT OUR PLACE',
-          chezHeading: 'AT OUR PLACE',
-          chezParagraph:
-            '“A glimpse into the Taco Naan universe: homemade breads, generous recipes, and a simple vibe where everyone feels good. Want to support us? Share your review.”',
-          chezDetails:
-            'Address: 38 Av. Saint-Vincent de Paul, 40100 Dax, France <br /> Hours: 11:30 – 15:00 / 18:00 – 23:30. <br /> Phone: +33979138543.',
-          menuTitle: 'SIGNATURE MENU',
-          aboutTitle: 'ABOUT',
-          aboutText:
-            '“At Taco Naan we reinvent French street food. Homemade naan, perfectly grilled meats, silky sauces, and generous portions — everything is prepared on site with true homemade flavor.”',
-          galleryTitle: 'GALLERY',
-          infoTitle: 'DAX',
-          infoHours: 'Hours: 11:30 – 15:00 / 18:00 – 23:30',
-          infoPhone: 'Phone: +33 9 79 13 85 43',
-          footerText: '© 2025 Taco Naan – Dax Street Food – Homemade',
-          footerPhone: 'Orders: +33979138543'
-        }
-      };
+      <p class="eyebrow gallery__title"><span data-i18n="gallery.h">Nos affiches</span></p>
+      <!-- Rempli par assets/js/site.js depuis assets/img/posters.js -->
+      <div class="affiches"></div>
+    </div>
+  </section>
+</main>
 
-      const langButtons = document.querySelectorAll('[data-lang-switch]');
+<!-- =========================================================== pied de page -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <img src="assets/img/logo-white-320.webp" width="320" height="197"
+           loading="lazy" alt="Taco Naan">
 
-      function setLanguage(lang) {
-        const strings = translations[lang];
-        Object.keys(strings).forEach((key) => {
-          const el = document.getElementById(key);
-          if (el) {
-            el.innerHTML = strings[key];
-          }
-        });
-        document.documentElement.setAttribute('lang', lang);
-        langButtons.forEach((btn) => {
-          btn.classList.toggle('active', btn.dataset.langSwitch === lang);
-        });
-      }
+      <div>
+        <p><b>Taco Naan</b></p>
+        <p>38 Av. Saint-Vincent de Paul<br>40100 Dax</p>
+        <p class="footer__made" data-i18n="foot.made">
+          Sur place et à emporter, sans livraison
+        </p>
+      </div>
 
-      langButtons.forEach((btn) =>
-        btn.addEventListener('click', () => setLanguage(btn.dataset.langSwitch))
-      );
+      <div>
+        <p data-i18n="foot.orders">Commandes</p>
+        <p class="footer__phone"><a href="tel:+33979138543">09 79 13 85 43</a></p>
+        <p class="footer__links">
+          <a href="https://www.instagram.com/taco_naan_dax/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.google.com/maps/place/?cid=14156280289773585904" target="_blank" rel="noopener">Google</a>
+        </p>
+      </div>
+    </div>
 
-      setLanguage('fr');
-    </script>
-  </body>
+    <p class="footer__legal">
+      <span data-i18n="foot.legal">© 2026 Taco Naan · Dax</span>
+      <span>Landes · Nouvelle-Aquitaine</span>
+    </p>
+  </div>
+</footer>
+
+<!-- ==================================================== barre d'appel mobile -->
+<div class="callbar" data-show="false">
+  <span class="status" data-status></span>
+  <a class="btn" href="tel:+33979138543">
+    <span data-i18n="nav.call">Appeler</span>
+  </a>
+</div>
+
+<dialog class="lightbox">
+  <button class="lightbox__close" type="button" data-i18n="close">Fermer</button>
+  <img alt="">
+</dialog>
+
+<script src="assets/img/manifest.js?v=15"></script>
+<script src="assets/img/extras.js?v=15"></script>
+<script src="assets/img/photos.js?v=15"></script>
+<script src="assets/img/boards.js?v=15"></script>
+<script src="assets/img/posters.js?v=15"></script>
+<script src="data/menu.js?v=15"></script>
+<script src="data/reviews.js?v=15"></script>
+<script src="assets/js/site.js?v=15"></script>
+</body>
 </html>

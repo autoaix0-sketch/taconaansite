@@ -1,0 +1,50 @@
+# Les polices telechargees par tools/make_brand_assets.py.
+# Elles ne servent qu a fabriquer les images, inutile de les versionner.
+.fonts-cache/
+
+# ---------------------------------------------------------------------------
+# SECRETS - reponse automatique aux avis Google.
+#
+# Le depot est PUBLIC. Ces fichiers donnent acces a la fiche Google de
+# l etablissement : ils ne doivent jamais y arriver. Les deux series de noms
+# sont couvertes, au cas ou un script serait renomme.
+# ---------------------------------------------------------------------------
+tools/reviews-reply/client_secret.json
+tools/reviews-reply/token.json
+tools/reviews-reply/.credentials.json
+tools/reviews-reply/.token.json
+
+# Filet de securite : tout fichier de ce dossier qui ressemble a un secret.
+tools/reviews-reply/*secret*
+tools/reviews-reply/*token*
+tools/reviews-reply/*credential*
+
+# Sorties de travail, sans interet dans l historique.
+tools/reviews-reply/repondus.json
+tools/reviews-reply/brouillons.md
+tools/reviews-reply/journal.log
+
+# Dossiers de travail de la refonte des photos : photos d origine archivees,
+# lots a valider, sauvegardes avant modification. Le site publie n en a pas
+# besoin, et le depot est public.
+_archive/
+_review/
+_backup-*/
+
+# ---------------------------------------------------------------------------
+# Sources brutes des scripts d images (tools/*.py) : les plans des panneaux et
+# les photos de depart. Le navigateur ne les charge jamais - le site sert les
+# .webp/.avif deja fabriques dans assets/img/. Elles restent sur ce disque et
+# les scripts continuent de les lire ; seul le miroir public s allege.
+# ---------------------------------------------------------------------------
+__pycache__/
+menu/*.png
+assets/img/burgers/
+assets/img/desserts/
+assets/img/soda/
+assets/img/pains au choix/
+assets/img/viandes au choix/
+assets/img/barquette.jpeg
+assets/img/assiette V2.jpeg
+assets/img/menu cheese naan.jpeg
+assets/img/téléchargement.png
