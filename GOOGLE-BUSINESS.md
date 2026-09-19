@@ -23,7 +23,7 @@ Le dépôt existe déjà. Il faut juste allumer l'hébergement gratuit.
 Ton adresse sera :
 
 ```
-https://sakkalkousay-source.github.io/taconaansite/
+https://autoaix0-sketch.github.io/taconaansite/
 ```
 
 Vérifie qu'elle s'ouvre bien avant de passer à la suite.
@@ -57,7 +57,7 @@ Cinq choses qui rapportent, une fois pour toutes :
 - **Photos** : tu en as 61. Ajoute les quatre panneaux de la carte
   (`menu/*.png`) — les gens cherchent les prix avant d'appeler.
 - **Menu** : Google laisse coller un lien de carte. Mets
-  `https://sakkalkousay-source.github.io/taconaansite/#carte`
+  `https://autoaix0-sketch.github.io/taconaansite/#carte`
 - **Lien d'avis en un clic** : dans ton espace, cherche **Demander des avis**.
   Google te donne un lien court du type `https://g.page/r/XXXXXXXX/review`.
   Copie-le dans `data/reviews.js`, ligne `writeUrl`. Le bouton « Laisser un
