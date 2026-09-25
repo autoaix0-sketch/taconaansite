@@ -21,8 +21,9 @@ Volontairement separe des trois autres outils : ils ecrivent manifest.js,
 extras.js et photos.js, celui-ci ecrit posters.js. Regenerer l'un n'efface
 jamais les autres.
 
-ATTENTION : ne relance pas tools/optimize_images.py. Sept de ses neuf sources
-ont ete archivees, et un passage a vide reecrirait manifest.js sans elles.
+Les sources de tools/optimize_images.py vivent dans _work/sources/ ; le
+script les y trouve directement, plus besoin de precaution avant de le
+relancer.
 
 Usage :  python tools/make_posters.py [--fonts DIR]
 Dependances : Pillow et numpy.
@@ -47,6 +48,10 @@ from optimize_images import trim_to_content
 
 ROOT = Path(__file__).resolve().parent.parent
 IMG = ROOT / "assets" / "img"
+# Les photos d'origine, comme pour les autres outils. assets/img/ ne contient
+# que des images deja fabriquees : une source qui traine dedans part en ligne
+# avec le site sans jamais y etre affichee.
+SRC = ROOT / "_work" / "sources"
 
 # Le brun chaud du bandeau central des panneaux. Il manquait cote Python : le
 # site s'en sert (--amber), l'affiche s'en sert pour la lueur derriere le plat.
@@ -297,6 +302,21 @@ def load_shot(stem: str, width: int) -> Image.Image | None:
 
 
 def compose(poster: dict, lang: str, fonts: dict) -> Image.Image:
+    if poster["id"] == "desserts":
+        # Photo d'origine, rangee avec les autres sources : IMG ne contient
+        # que des images deja fabriquees, servies au navigateur.
+        best_one_path = SRC / "best one.jpeg"
+        if best_one_path.exists():
+            im = Image.open(best_one_path).convert("RGB")
+            w, h = im.size
+            target_h = int(w / 0.8)
+            if h > target_h:
+                top = (h - target_h) // 2
+                im_cropped = im.crop((0, top, w, top + target_h))
+            else:
+                im_cropped = im
+            return im_cropped.resize((W, H), Image.LANCZOS)
+
     text = poster["text"][lang]
 
     shots = [(load_shot(stem, width), offset)

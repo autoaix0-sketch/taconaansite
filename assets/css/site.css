@@ -964,7 +964,7 @@ a { color: inherit; }
   transition: rotate .5s var(--spring), box-shadow .5s var(--ease);
 }
 .shot:hover { rotate: 0deg; box-shadow: 0 36px 80px rgba(255, 198, 26, .14); }
-.shot img { width: 100%; }
+.shot img, .shot__video { width: 100%; display: block; }
 .shot figcaption {
   position: absolute;
   left: 0; right: 0; bottom: 0;

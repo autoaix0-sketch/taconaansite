@@ -2,10 +2,11 @@
 """
 Taco Naan - photos produit exportees depuis l outil de design.
 
-Les fichiers de assets/img/desserts, pains au choix, viandes au choix, burgers
-et soda viennent d un export en JPEG : le damier de transparence et le libelle
-du plat ("NAAN MIEL", "CORDON BLEU"...) sont donc de vrais pixels, pas un canal
-alpha. Tels quels ils ne sont pas utilisables sur le site.
+Les fichiers de _work/sources/products/desserts, pains au choix, viandes au
+choix, burgers et soda viennent d un export en JPEG : le damier de
+transparence et le libelle du plat ("NAAN MIEL", "CORDON BLEU"...) sont donc
+de vrais pixels, pas un canal alpha. Tels quels ils ne sont pas utilisables
+sur le site.
 
 Ce script fait trois choses :
   1. il retrouve les deux gris du damier sur le bord, et rend le fond transparent
@@ -19,9 +20,8 @@ photos.js complete window.TACONAAN_IMAGES, exactement comme extras.js. Il est
 volontairement separe de manifest.js (tools/optimize_images.py) et de extras.js
 (tools/make_product_crops.py) : regenerer l un n efface jamais les autres.
 
-ATTENTION : ne relance pas tools/optimize_images.py sans corriger d abord ses
-RECIPES. Elles pointent vers des photos d origine qui ont ete archivees dans
-_archive/source-photos/, et un passage a vide reecrirait manifest.js sans elles.
+tools/optimize_images.py lit ses RECIPES depuis _work/sources/ : il n y a
+plus rien a corriger avant de le relancer.
 
 Usage :  python tools/make_product_photos.py
 Dependances : Pillow et numpy.
@@ -42,6 +42,7 @@ from optimize_images import add_grain, warm_grade  # meme traitement que les aut
 
 ROOT = Path(__file__).resolve().parent.parent
 IMG = ROOT / "assets" / "img"
+SRC = ROOT / "_work" / "sources" / "products"
 
 # Largeur de travail : au-dela, on ne gagne aucun detail utile et le detourage
 # devient lent pour rien.
@@ -130,7 +131,10 @@ PHOTOS = [
     ("pains-galette",          "pains au choix/galette.jpg",        "cutout", (0, 0, 1, 0.578), THUMB),
     ("pains-cheese-naan",      "pains au choix/pain naan.jpg",      "cutout", (0, 0, 1, 0.59), THUMB),
 
-    # --- les viandes au choix (pas de photo pour le steak) -----------------
+    # --- les viandes au choix -----------------------------------------------
+    # steak.jpg (l export d origine) porte un filigrane Vecteezy en travers de
+    # l image et reste inutilisable. steak.png est une autre photo, sans
+    # filigrane, ajoutee le 20/09/2026 : meme traitement damier que les autres.
     ("viandes-kebab",          "viandes au choix/kebab.jpeg",        "cutout", None, THUMB),
     ("viandes-viande-hachee",  "viandes au choix/viande hachee.jpeg","cutout", None, THUMB),
     ("viandes-poulet",         "viandes au choix/poulet.jpeg",       "cutout", None, THUMB),
@@ -139,6 +143,7 @@ PHOTOS = [
     ("viandes-nuggets",        "viandes au choix/nuggets.jpeg",      "cutout", None, THUMB),
     ("viandes-tenders",        "viandes au choix/tenders.jpeg",      "cutout", None, THUMB),
     ("viandes-falafel",        "viandes au choix/falafel.jpeg",      "cutout", None, THUMB),
+    ("viandes-steak",          "viandes au choix/steak.png",         "cutout", None, THUMB),
 
     # --- les boissons en canette ------------------------------------------
     ("soda-coca",              "soda/coca cola.jpg",           "cutout", None, THUMB),
@@ -516,7 +521,9 @@ def main() -> int:
     for entry in PHOTOS:
         stem, source, kind, crop, widths = entry[:5]
         opts = entry[5] if len(entry) > 5 else {}
-        path = IMG / source
+        path = SRC / source
+        if not path.exists():
+            path = ROOT / source
         if not path.exists():
             print(f"  - {source} introuvable, ignore")
             continue

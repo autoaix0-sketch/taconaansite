@@ -58,13 +58,24 @@ const authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + new URLSearchP
   state
 });
 
+/* Le titre est toujours un texte fixe ecrit plus bas. Le corps, lui, peut
+   porter ce que Google renvoie dans ?error= - un serveur local qui ecoute
+   sur localhost peut recevoir une requete de n'importe quelle page ouverte
+   dans le meme navigateur pendant les quelques secondes ou ce script tourne,
+   donc ce texte n'est pas plus fiable qu'un texte venu du reseau. */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function page(title, body) {
   return `<!doctype html><meta charset="utf-8">
 <title>${title}</title>
 <body style="margin:0;display:grid;place-content:center;min-height:100vh;
 background:#0a0c0c;color:#f6f2e8;font:16px/1.6 system-ui,sans-serif;text-align:center">
 <div><h1 style="color:#ffc61a;font-size:1.6rem;margin:0 0 .6rem">${title}</h1>
-<p style="color:#9ba39f;margin:0">${body}</p></div>`;
+<p style="color:#9ba39f;margin:0">${escapeHtml(body)}</p></div>`;
 }
 
 const server = createServer(async (req, res) => {
@@ -114,12 +125,15 @@ const server = createServer(async (req, res) => {
     process.exit(1);
   }
 
+  /* mode 0o600 : ce fichier donne un acces complet a la fiche Google du
+     restaurant. Le retirer aux autres comptes de la machine ne coute rien
+     (Windows l'ignore, mais ne fait pas de mal non plus). */
   writeFileSync(TOKEN_FILE, JSON.stringify({
     refresh_token: token.refresh_token,
     client_id: creds.client_id,
     client_secret: creds.client_secret,
     obtained: new Date().toISOString()
-  }, null, 2));
+  }, null, 2), { mode: 0o600 });
 
   res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' })
      .end(page('C est bon', 'Tu peux fermer cette page et revenir au terminal.'));

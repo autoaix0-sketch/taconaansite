@@ -2,7 +2,7 @@
 """
 Taco Naan - preparation des panneaux de la boutique.
 
-Les fichiers de menu/ sont les photos des panneaux affiches au comptoir.
+Les fichiers de _work/sources/boards/ sont les photos des panneaux affiches au comptoir.
 Ce sont des visuels graphiques, pas des photos de plats : ils ne recoivent
 ni grain ni correction chaude, qui rendraient les prix moins lisibles. On se
 contente de redimensionner proprement et d'exporter en AVIF + WebP.
@@ -28,7 +28,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "menu"
+SRC = ROOT / "_work" / "sources" / "boards"
 OUT = ROOT / "assets" / "img"
 
 # nom de sortie, fichier source, intitule affiche sous le panneau
@@ -197,7 +197,7 @@ def main() -> int:
 
         entries.append((stem, label, sizes))
         detail = ("  [" + ", ".join(notes) + "]") if notes else ""
-        print(f"  + {stem:17s} <- menu/{filename:16s} "
+        print(f"  + {stem:17s} <- boards/{filename:16s} "
               f"{original.size[0]}x{original.size[1]}{detail}")
 
     lines = [

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- GitHub Pages sert cette page pour TOUTE adresse inconnue du site, y
+     compris une adresse profonde comme /taconaansite/carte/pizza. Sans cette
+     base, « assets/css/site.css » serait alors cherche dans /carte/, la page
+     arriverait sans style et le logo casse. La base fixe le point de depart
+     une fois pour toutes.
+     SI LE SITE DEMENAGE SUR UN VRAI NOM DE DOMAINE : mettre href="/". -->
+<base href="/taconaansite/">
+<title>Page introuvable — Taco Naan</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.png" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css?v=16">
+<style>
+  /* Propre à cette page seule : le reste vient de site.css. */
+  .notfound {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .notfound__code {
+    font-family: var(--mono);
+    color: var(--yellow);
+    letter-spacing: .2em;
+    font-size: .85rem;
+  }
+  .notfound__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<main class="notfound wrap">
+  <img src="assets/img/logo-white-320.webp"
+       srcset="assets/img/logo-white-320.webp 320w, assets/img/logo-white-640.webp 640w"
+       sizes="5.4rem" width="320" height="197" alt="Taco Naan">
+  <p class="notfound__code">404 · page introuvable</p>
+  <h1>Cette page n’existe pas.</h1>
+  <p>La carte, les horaires et l’adresse sont sur la page d’accueil.</p>
+  <div class="notfound__actions">
+    <a class="btn" href="./">Retour à l’accueil</a>
+    <a class="btn btn--ghost" href="tel:+33979138543">Appeler · 09 79 13 85 43</a>
+  </div>
+</main>
+</body>
+</html>

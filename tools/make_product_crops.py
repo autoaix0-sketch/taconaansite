@@ -3,7 +3,7 @@
 Taco Naan - vignettes de plats decoupees dans les panneaux.
 
 Certaines categories de la carte n'ont pas de photo produit a part. Mais les
-panneaux du dossier menu/ en contiennent : on y decoupe la vignette.
+panneaux du dossier _work/sources/boards/ en contiennent : on y decoupe la vignette.
 
 C'est aussi d'ici que viennent les bols, le menu enfant et le Tex-Mex. Les
 images qui tenaient ces places avant venaient d'ailleurs : deux montraient un
@@ -43,22 +43,21 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from optimize_images import add_grain, warm_grade  # meme traitement que les autres photos
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "menu"
+SRC = ROOT / "_work" / "sources" / "boards"
 OUT = ROOT / "assets" / "img"
 
 # nom de sortie, panneau source, zone a decouper en fractions
 # (gauche, haut, droite, bas) -- 0 = bord gauche/haut, 1 = bord droit/bas.
+# Les vignettes de la carte (bowl, enfant, texmex) sont parties d'ici : elles
+# sortaient en rectangle encadre au milieu de neuf vignettes detourees. Elles
+# sont desormais refaites en detoure par tools/make_category_cutouts.py, qui
+# repart du meme panneau pour le bol et les wings - seul le fond change.
 CROPS = [
     ("barquette", "barquette.png", (0.7930, 0.1220, 0.9900, 0.2980)),
 
-    # --- decoupes dans le panneau Burgers ---------------------------------
-    # Les deux bols, photographies dans leur cercle sur le panneau.
-    ("bowl",      "burger.png",    (0.5848, 0.5212, 0.7249, 0.7303)),
+    # --- decoupe dans le panneau Burgers ----------------------------------
+    # Le bol de poulet crousty, photographie dans son cercle sur le panneau.
     ("crousty",   "burger.png",    (0.5952, 0.7242, 0.7266, 0.9455)),
-    # Le menu enfant : la meme boite que sur le panneau, prise sur le panneau.
-    ("enfant",    "burger.png",    (0.7647, 0.5879, 0.8633, 0.7818)),
-    # Tex-Mex : les wings, le plat le plus lisible de la rangee.
-    ("texmex",    "burger.png",    (0.4775, 0.3182, 0.5692, 0.4318)),
 ]
 
 WIDTHS = [300, 600]
@@ -111,7 +110,7 @@ def main() -> int:
                 print(f"    ! AVIF ignore pour {stem}-{width} ({exc})")
 
         entries.append((stem, sizes))
-        print(f"  + {stem:12s} <- menu/{filename:16s} {crop.size[0]}x{crop.size[1]}")
+        print(f"  + {stem:12s} <- boards/{filename:16s} {crop.size[0]}x{crop.size[1]}")
 
     lines = [
         "/* Genere par tools/make_product_crops.py - ne pas modifier a la main. */",

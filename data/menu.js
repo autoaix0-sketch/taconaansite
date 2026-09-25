@@ -103,7 +103,7 @@ window.TACONAAN_MENU = {
       id: 'assiettes',
       num: '03',
       name: 'Assiettes',
-      image: 'assiette_v2',
+      image: 'assiette_cut',
       tagline: {
         fr: 'Servie avec un cheese naan. On ne compte pas.',
         es: 'Servida con un cheese naan. Sin tacañería.',
@@ -168,8 +168,7 @@ window.TACONAAN_MENU = {
       id: 'bowls',
       num: '06',
       name: 'Bowls',
-      image: 'bowl',
-      kind: 'photo',
+      image: 'bowl_cut',
       tagline: {
         fr: 'Sans pain. Tout le reste y est.',
         es: 'Sin pan. Todo lo demás está.',
@@ -185,8 +184,7 @@ window.TACONAAN_MENU = {
       id: 'texmex',
       num: '07',
       name: 'Tex-Mex',
-      image: 'texmex',
-      kind: 'photo',
+      image: 'texmex_cut',
       tiersOnly: [0, 2],
       tagline: {
         fr: 'À picorer, à partager, ou pas.',
@@ -208,7 +206,7 @@ window.TACONAAN_MENU = {
       id: 'enfant',
       num: '08',
       name: 'Menu Kids',
-      image: 'enfant',
+      image: 'enfant_cut',
       tagline: {
         fr: 'Le plat, les frites, la boisson — et la surprise.',
         es: 'El plato, las patatas, la bebida — y la sorpresa.',

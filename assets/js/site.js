@@ -73,13 +73,13 @@
       'proof.3.t': 'Le compte est bon',
       'proof.3.d': '« Les prix sont très abordables », « bon rapport qualité-prix ». On préfère remplir l’assiette.',
       'maison.caption': 'Avenue Saint-Vincent de Paul, Dax',
-      'maison.alt': 'Deux naans garnis sortis du four',
+      'maison.alt': 'Broche de kebab, illustration animée',
 
       'avis.eyebrow': 'Les avis',
-      'avis.h2': '271 personnes ont pris le temps d’écrire.',
+      'avis.h2': '{n} personnes ont pris le temps d’écrire.',
       'avis.mentions': 'Ce que les clients citent le plus',
       'avis.write': 'Laisser un avis',
-      'avis.read': 'Voir les 271 avis',
+      'avis.read': 'Voir les {n} avis',
       'avis.source': 'Avis repris tels quels de notre fiche Google, relevés le 17 septembre 2026. La note et le nombre d’avis évoluent : Google fait foi.',
       'avis.reply': 'Notre réponse',
 
@@ -160,13 +160,13 @@
       'proof.3.t': 'Las cuentas claras',
       'proof.3.d': '«Los precios son muy asequibles», «buena relación calidad-precio». Preferimos llenar el plato.',
       'maison.caption': 'Avenue Saint-Vincent de Paul, Dax',
-      'maison.alt': 'Dos naans rellenos recién salidos del horno',
+      'maison.alt': 'Espada de kebab, ilustración animada',
 
       'avis.eyebrow': 'Opiniones',
-      'avis.h2': '271 personas se tomaron el tiempo de escribir.',
+      'avis.h2': '{n} personas se tomaron el tiempo de escribir.',
       'avis.mentions': 'Lo que más mencionan los clientes',
       'avis.write': 'Dejar una opinión',
-      'avis.read': 'Ver las 271 opiniones',
+      'avis.read': 'Ver las {n} opiniones',
       'avis.source': 'Opiniones reproducidas tal cual desde nuestra ficha de Google, consultadas el 17 de septiembre de 2026. La nota y el número de opiniones cambian: Google manda.',
       'avis.reply': 'Nuestra respuesta',
 
@@ -247,13 +247,13 @@
       'proof.3.t': 'The maths works out',
       'proof.3.d': '“Very affordable prices”, “good value for money”. We would rather fill the plate.',
       'maison.caption': 'Avenue Saint-Vincent de Paul, Dax',
-      'maison.alt': 'Two loaded naans fresh from the oven',
+      'maison.alt': 'Kebab spit, animated illustration',
 
       'avis.eyebrow': 'Reviews',
-      'avis.h2': '271 people took the time to write.',
+      'avis.h2': '{n} people took the time to write.',
       'avis.mentions': 'What customers mention most',
       'avis.write': 'Leave a review',
-      'avis.read': 'Read all 271 reviews',
+      'avis.read': 'Read all {n} reviews',
       'avis.source': 'Reviews reproduced as written on our Google listing, checked on 17 September 2026. The rating and count change over time: Google is the source of truth.',
       'avis.reply': 'Our reply',
 
@@ -356,7 +356,7 @@
     var entry = IMAGES[key] || IMAGES[String(key).replace(/-/g, '_')];
     if (!entry) return '';
 
-    var stem = entry.stem;
+    var stem = escapeHtml(entry.stem);
     var last = entry.sizes[entry.sizes.length - 1];
 
     function srcset(ext) {
@@ -525,7 +525,7 @@
             '<h3>' + escapeHtml(cat.name) + '</h3>' +
             '<p>' + escapeHtml(pick(cat.tagline)) + '</p>' +
           '</div>' +
-          '<div class="ticket__thumb" data-kind="' + kind + '">' +
+          '<div class="ticket__thumb" data-kind="' + escapeHtml(kind) + '">' +
             picture(cat.image, cat.name, '(min-width: 52rem) 8rem, 6rem') +
           '</div>' +
         '</div>' +
@@ -562,8 +562,9 @@
 
         var values = group.values.map(function (v) {
           if (!withPics) return '<li>' + escapeHtml(v) + '</li>';
-          /* Le steak n a pas de photo : on garde quand meme la case, sinon
-             son nom remonte tout seul au-dessus de la ligne des autres. */
+          /* picture() renvoie '' si aucune image n'existe pour cette valeur :
+             on garde quand meme la case (photo vide), sinon un choix sans
+             photo remonterait tout seul au-dessus de la ligne des autres. */
           var pic = picture(keyOf(v), v, '(min-width: 52rem) 5rem, 4rem');
           return '<li class="extras__item">' +
             '<span class="extras__pic">' + pic + '</span>' +
@@ -594,17 +595,21 @@
     if (!host || !window.TACONAAN_BOARDS) return;
 
     host.innerHTML = window.TACONAAN_BOARDS.map(function (board) {
+      var stem = escapeHtml(board.stem);
       var big = board.sizes[board.sizes.length - 1];
       var srcset = function (ext) {
         return board.sizes.map(function (sz) {
-          return 'assets/img/' + board.stem + '-' + sz[0] + '.' + ext + ' ' + sz[0] + 'w';
+          return 'assets/img/' + stem + '-' + sz[0] + '.' + ext + ' ' + sz[0] + 'w';
         }).join(', ');
       };
+      /* data-label suit data-full : agrandi, le panneau garde son nom. Sans
+         lui la lightbox s'ouvrait sur une image sans alt (voir wireLightbox). */
       return '<button type="button" class="board" data-full="assets/img/' +
-          board.stem + '-' + big[0] + '.webp">' +
+          stem + '-' + big[0] + '.webp"' +
+          ' data-label="' + escapeHtml(t('boards.alt') + ' ' + board.label) + '">' +
         '<picture>' +
           '<source type="image/avif" srcset="' + srcset('avif') + '" sizes="(min-width: 60rem) 34rem, 92vw">' +
-          '<img src="assets/img/' + board.stem + '-' + big[0] + '.webp"' +
+          '<img src="assets/img/' + stem + '-' + big[0] + '.webp"' +
             ' srcset="' + srcset('webp') + '" sizes="(min-width: 60rem) 34rem, 92vw"' +
             ' width="' + big[0] + '" height="' + big[1] + '"' +
             ' alt="' + escapeHtml(t('boards.alt') + ' ' + board.label) + '"' +
@@ -638,7 +643,7 @@
   /* --------------------------------------------------------------- avis */
 
   function stars(count) {
-    var full = Math.round(count || 5);
+    var full = Math.round(count == null ? 5 : count);
     return new Array(full + 1).join('★') + new Array(6 - full).join('☆');
   }
 
@@ -652,7 +657,7 @@
             escapeHtml(review.reply) + '</div>'
           : '';
         return '<figure class="note" data-reveal>' +
-          '<div class="note__stars" aria-label="' + review.stars + '/5">' +
+          '<div class="note__stars" aria-label="' + escapeHtml(review.stars) + '/5">' +
             stars(review.stars) + '</div>' +
           '<blockquote class="note__text">' + escapeHtml(review.text) + '</blockquote>' +
           '<figcaption class="note__by"><b>' + escapeHtml(review.author) + '</b>' +
@@ -673,13 +678,13 @@
           '<span>' + escapeHtml(m.word) + '</span>' +
           '<span class="gauge__bar"><span class="gauge__fill" data-w="' +
             Math.round(m.count / top * 100) + '"></span></span>' +
-          '<span>' + m.count + '×</span>' +
+          '<span>' + escapeHtml(m.count) + '×</span>' +
         '</div>';
       }).join('');
     }
 
     var num = $('.score__num');
-    if (num && REVIEWS.rating) {
+    if (num && REVIEWS.rating != null) {
       num.textContent = new Intl.NumberFormat(LOCALES[lang], {
         minimumFractionDigits: 1
       }).format(REVIEWS.rating);
@@ -706,7 +711,7 @@
     if (!host || !window.TACONAAN_POSTERS) return;
 
     host.innerHTML = window.TACONAAN_POSTERS.map(function (poster) {
-      var stem = pick(poster.stem);
+      var stem = escapeHtml(pick(poster.stem));
       var alt = pick(poster.alt);
       var big = poster.sizes[poster.sizes.length - 1];
 
@@ -781,7 +786,16 @@
 
   /* ------------------------------------------- apparitions, barre, langue */
 
+  /* applyLanguage() rejoue wireReveal() a chaque changement de langue : sans
+     cette reference, chaque clic FR/ES/EN cree un nouvel observateur sans
+     jamais fermer le precedent, qui reste attache aux elements statiques
+     (ceux qu'aucun render* ne remplace, comme .shot ou les panneaux de
+     #venir) pour le reste de la visite. */
+  var revealObserver = null;
+
   function wireReveal() {
+    if (revealObserver) revealObserver.disconnect();
+
     if (!('IntersectionObserver' in window) ||
         matchMedia('(prefers-reduced-motion: reduce)').matches) {
       $$('[data-reveal]').forEach(function (n) { n.classList.add('is-in'); });
@@ -809,33 +823,30 @@
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
 
+    revealObserver = observer;
     $$('[data-reveal]').forEach(function (n) { observer.observe(n); });
   }
 
-  /* ------------------------------------------------------- video du hero */
+  /* -------------------------------------------------- videos de fond ---- */
 
-  /* Une video de fond qui tourne en permanence, c'est du processeur et de la
-     batterie consommes pour une image que plus personne ne regarde des qu'on
-     a defile. On la met en pause des qu'elle quitte l'ecran, et on ne la
+  /* Partagee par le hero et la photo de la maison (deux videos muettes, en
+     boucle, sans controles - un decor, pas un lecteur). Une video de fond
+     qui tourne en permanence, c'est du processeur et de la batterie
+     consommes pour une image que plus personne ne regarde des qu'on a
+     defile. On la met en pause des qu'elle quitte l'ecran, et on ne la
      lance pas du tout si le visiteur a demande moins d'animations : il voit
      alors l'affiche fixe, qui suffit.
 
-     Sur un ecran etroit, on ne la lance pas non plus. Le degrade du hero la
-     couvre a 96 % du cote du texte, et sur un telephone il ne reste rien a
-     regarder : la video coutait 337 Ko pour un liseré. L'affiche, elle, fait
-     37 Ko et dit la meme chose. Avec preload="none" dans le HTML, ne pas
-     appeler play() suffit a ce que rien ne parte sur le reseau. */
-  var VIDEO_MIN_WIDTH = '(min-width: 48rem)';
-
-  function wireHeroVideo() {
-    var video = $('.hero__video');
+     minWidth est optionnel : seul le hero l'utilise (voir HERO_VIDEO_MIN_WIDTH
+     ci-dessous pour pourquoi). Le HTML ne porte pas autoplay : sans appel a
+     play(), rien ne part sur le reseau et l'affiche reste - il n'y a donc
+     rien a defaire quand on decide de ne pas lancer la lecture. */
+  function wireBgVideo(selector, minWidth) {
+    var video = $(selector);
     if (!video) return;
 
     var still = matchMedia('(prefers-reduced-motion: reduce)').matches
-             || !matchMedia(VIDEO_MIN_WIDTH).matches;
-
-    /* Le HTML ne porte plus autoplay : sans appel a play(), rien ne part sur
-       le reseau et l'affiche reste. Il n'y a donc rien a defaire ici. */
+             || (minWidth && !matchMedia(minWidth).matches);
     if (still) return;
 
     /* play() renvoie une promesse rejetee si le navigateur refuse de lancer la
@@ -848,7 +859,7 @@
 
     /* Sans IntersectionObserver, plus personne ne mettrait la video en pause
        en bas de page - mais ne pas la lancer du tout serait pire : le HTML ne
-       porte plus autoplay, donc il ne resterait que l'affiche. On la lance. */
+       porte pas autoplay, donc il ne resterait que l'affiche. On la lance. */
     if (!('IntersectionObserver' in window)) {
       start();
       return;
@@ -864,6 +875,14 @@
       });
     }, { threshold: 0.05 }).observe(video);
   }
+
+  /* Le degrade du hero couvre la video a 96 % du cote du texte, et sur un
+     telephone il ne reste rien a regarder : la video coutait 337 Ko pour un
+     liseré. L'affiche, elle, fait 37 Ko et dit la meme chose. En dessous de
+     48rem, on ne la lance donc pas. La photo de la maison n'a pas ce
+     probleme : c'est elle le contenu, pas un decor derriere du texte, donc
+     elle se lance a toutes les largeurs. */
+  var HERO_VIDEO_MIN_WIDTH = '(min-width: 48rem)';
 
   function wireChrome() {
     var topbar = $('.topbar');
@@ -885,7 +904,11 @@
     document.documentElement.setAttribute('lang', lang);
 
     $$('[data-i18n]').forEach(function (node) {
-      node.textContent = t(node.getAttribute('data-i18n'));
+      /* '{n}' est le seul jeton du dictionnaire : il porte le nombre d'avis,
+         lu une fois dans data/reviews.js et jamais recopié à la main. */
+      var text = t(node.getAttribute('data-i18n'));
+      if (REVIEWS.count != null) text = text.replace('{n}', REVIEWS.count);
+      node.textContent = text;
     });
     /* Quelques textes contiennent du gras ou des <span> : ceux-là sont
        injectés en HTML, et uniquement depuis le dictionnaire ci-dessus. */
@@ -930,7 +953,8 @@
   /* ------------------------------------------------------------- démarrage */
 
   function start() {
-    wireHeroVideo();
+    wireBgVideo('.hero__video', HERO_VIDEO_MIN_WIDTH);
+    wireBgVideo('.shot__video');
     wireLanguage();
     wireFilters();
     wireLightbox();

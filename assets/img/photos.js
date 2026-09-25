@@ -18,6 +18,7 @@ window.TACONAAN_IMAGES = Object.assign(window.TACONAAN_IMAGES || {}, {
   viandes_nuggets: { stem: 'viandes-nuggets', kind: 'cutout', sizes: [[218, 151]] },
   viandes_tenders: { stem: 'viandes-tenders', kind: 'cutout', sizes: [[225, 119]] },
   viandes_falafel: { stem: 'viandes-falafel', kind: 'cutout', sizes: [[219, 150]] },
+  viandes_steak: { stem: 'viandes-steak', kind: 'cutout', sizes: [[240, 158], [480, 315]] },
   soda_coca: { stem: 'soda-coca', kind: 'cutout', sizes: [[240, 637], [255, 677]] },
   soda_coca_zero: { stem: 'soda-coca-zero', kind: 'cutout', sizes: [[240, 642], [246, 658]] },
   soda_lipton: { stem: 'soda-lipton', kind: 'cutout', sizes: [[240, 607], [258, 653]] },

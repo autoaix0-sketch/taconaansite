@@ -24,27 +24,19 @@ tools/reviews-reply/repondus.json
 tools/reviews-reply/brouillons.md
 tools/reviews-reply/journal.log
 
-# Dossiers de travail de la refonte des photos : photos d origine archivees,
-# lots a valider, sauvegardes avant modification. Le site publie n en a pas
-# besoin, et le depot est public.
-_archive/
-_review/
-_backup-*/
+# ---------------------------------------------------------------------------
+# Tout ce qui ne sert qu a fabriquer le site, jamais a le servir : les photos
+# d origine que lisent tools/*.py (_work/sources/), les masters (_work/masters/),
+# les lots a valider et les sauvegardes (_work/review/, _work/backups/). Le
+# navigateur ne charge rien de tout ca - le site sert les .webp/.avif deja
+# fabriques dans assets/img/. Rien n est perdu : ca reste sur ce disque, seul
+# le miroir public s allege.
+# ---------------------------------------------------------------------------
+_work/
 
-# ---------------------------------------------------------------------------
-# Sources brutes des scripts d images (tools/*.py) : les plans des panneaux et
-# les photos de depart. Le navigateur ne les charge jamais - le site sert les
-# .webp/.avif deja fabriques dans assets/img/. Elles restent sur ce disque et
-# les scripts continuent de les lire ; seul le miroir public s allege.
-# ---------------------------------------------------------------------------
 __pycache__/
-menu/*.png
-assets/img/burgers/
-assets/img/desserts/
-assets/img/soda/
-assets/img/pains au choix/
-assets/img/viandes au choix/
-assets/img/barquette.jpeg
-assets/img/assiette V2.jpeg
-assets/img/menu cheese naan.jpeg
-assets/img/téléchargement.png
+
+# Outils installes ponctuellement pour verifier le site (jsdom et compagnie).
+# Le site n'a aucune dependance : il n'y a rien a installer pour le servir.
+node_modules/
+package-lock.json

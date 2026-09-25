@@ -1,0 +1,16 @@
+{
+  "name": "Taco Naan",
+  "short_name": "Taco Naan",
+  "description": "Kebab, naan et tacos faits maison à Dax.",
+  "//": "start_url et scope sont RELATIFS a ce fichier : '../' depuis /assets/ = la racine du site. Ecrit comme ca, et non '/', parce que le site est publie dans un sous-dossier (github.io/taconaansite/) : '/' renverrait a github.io tout court, hors du site. Un jour sur un vrai nom de domaine, ces deux lignes continueront de marcher sans y toucher.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#0a0c0c",
+  "theme_color": "#0a0c0c",
+  "lang": "fr",
+  "icons": [
+    { "src": "img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "img/favicon.png", "sizes": "48x48", "type": "image/png" }
+  ]
+}

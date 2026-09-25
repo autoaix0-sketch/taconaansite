@@ -2,7 +2,7 @@
 """
 Taco Naan - preparation des images du site.
 
-Lit les photos d'origine a la racine du projet, les retravaille pour qu'elles
+Lit les photos d'origine dans _work/sources/, les retravaille pour qu'elles
 appartiennent toutes au meme univers visuel (papier kraft & encre), puis les
 exporte en AVIF + WebP sur plusieurs largeurs dans assets/img/.
 
@@ -20,6 +20,11 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "img"
+# Les photos d'origine (naaan.png, tacoss.png, ...) ont ete rangees hors du
+# depot public. Elles restent lisibles par ce script a cet endroit ; si une
+# recette ne s'y trouve pas, on retombe sur ROOT au cas ou elle a ete remise
+# a la racine a la main.
+SRC = ROOT / "_work" / "sources"
 
 # Couleur temoin utilisee par le remplissage par diffusion pour marquer le fond.
 FLOOD_MARK = (255, 0, 255)
@@ -152,13 +157,13 @@ def export(im: Image.Image, stem: str, widths: list[int]) -> tuple[list[str], li
 # kind = "photo"   -> encadree, traitee grain + chaleur
 # crop             -> fraction (gauche, haut, droite, bas) a retirer
 #
-# ATTENTION avant de relancer ce script : plusieurs sources ont ete archivees
-# dans _archive/source-photos/ et ne sont plus la. Un passage a vide reecrirait
-# manifest.js sans elles. Voir l'avertissement en tete de make_product_photos.py.
+# Les sources sont lues depuis SRC (_work/sources/), avec repli sur la
+# racine du projet si une source a ete remise la a la main. Voir aussi
+# l'avertissement en tete de make_product_photos.py pour l'autre pipeline.
 #
-# A verifier aussi sur toute nouvelle source : assets/img/viandes au choix/
-# steak.jpg porte un filigrane "Vecteezy" en travers de l'image. Il n'est pas
-# utilisable, et c'est pour ca que "Steak" n'a pas de vignette sur la carte.
+# A verifier aussi sur toute nouvelle source : _work/sources/products/viandes
+# au choix/steak.jpg (l'export d'origine, distinct de steak.png) porte un
+# filigrane "Vecteezy" en travers de l'image et reste inutilisable.
 
 RECIPES = [
     # nom de sortie      source                kind      widths            crop
@@ -176,10 +181,8 @@ RECIPES = [
     ("texmex",           "texmex.jpg",         "photo",  [480, 960],       None),
     ("wraps",            "Naan.jpg",           "photo",  [480, 960],       None),
     ("grillades",        "tacos.jpg",          "photo",  [480, 960],       None),
-    ("logo-ink",         "Logo animations for website usage/assets/taco-naan-ink.png",
-                                               "cutout", [320, 640, 960],  None),
-    ("logo-white",       "Logo animations for website usage/assets/taco-naan-white.png",
-                                               "cutout", [320, 640],       None),
+    ("logo-ink",         "taco-naan-ink.png",  "cutout", [320, 640, 960],  None),
+    ("logo-white",       "taco-naan-white.png", "cutout", [320, 640],      None),
 ]
 
 
@@ -222,7 +225,9 @@ def main() -> int:
     total = 0
     manifest: dict[str, dict] = {}
     for stem, src_name, kind, widths, crop in RECIPES:
-        src = ROOT / src_name
+        src = SRC / src_name
+        if not src.exists():
+            src = ROOT / src_name
         if not src.exists():
             print(f"  - {src_name} introuvable, ignore")
             continue

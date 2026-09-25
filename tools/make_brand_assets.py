@@ -30,7 +30,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "img"
 
-# Palette relevee sur les panneaux affiches au comptoir (menu/*.png) : noir
+# Palette relevee sur les panneaux affiches au comptoir (_work/sources/boards/*.png) : noir
 # mat et jaune. Le site, la vitrine et l'image de partage disent la meme chose.
 VOID = (10, 12, 12)
 COAL = (17, 22, 21)

@@ -12,8 +12,9 @@
 
    POUR METTRE À JOUR LA NOTE (2 fois par an suffit) :
    ouvre ta fiche Google, relève la note et le nombre d'avis, recopie-les
-   dans `rating` et `count` juste en dessous. Pense aussi à changer les
-   deux « 271 » dans assets/js/site.js (clés `avis.h2` et `avis.read`).
+   dans `rating` et `count` juste en dessous. C'est tout : le score, le
+   texte « {n} personnes... » et le bouton « Voir les {n} avis » le lisent
+   tous les trois ici, dans les trois langues.
    ========================================================================= */
 
 window.TACONAAN_REVIEWS = {

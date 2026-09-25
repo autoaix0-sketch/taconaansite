@@ -22,12 +22,13 @@
 
 <link rel="icon" href="assets/img/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="assets/site.webmanifest">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/img/logo-white-320.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=15">
+<link rel="stylesheet" href="assets/css/site.css?v=16">
 
 <!-- Fiche établissement pour Google.
 
@@ -179,7 +180,7 @@
           </picture>
         </figure>
 
-        <a class="score" href="#avis" data-review-read>
+        <a class="score" href="#avis">
           <span class="score__stars" aria-hidden="true">★★★★★</span>
           <b class="score__num">4,5</b>
           <span class="score__meta">
@@ -286,19 +287,19 @@
       </div>
 
       <figure class="shot" data-reveal>
-        <!-- Les AVIF existaient deja sur le disque mais n'etaient pas servis :
-             cette figure etait le seul <img> nu de la page. 43 Ko au lieu de 66. -->
-        <picture>
-          <source type="image/avif"
-                  srcset="assets/img/wraps-480.avif 480w, assets/img/wraps-600.avif 600w"
-                  sizes="(min-width: 58rem) 26rem, 78vw">
-          <img src="assets/img/wraps-600.webp"
-               srcset="assets/img/wraps-480.webp 480w, assets/img/wraps-600.webp 600w"
-               sizes="(min-width: 58rem) 26rem, 78vw"
-               width="600" height="900" loading="lazy" decoding="async"
-               data-i18n-aria="maison.alt"
-               alt="Deux naans garnis sortis du four">
-        </picture>
+        <!-- Meme logique que la video du hero (voir wireHeroVideo) : muette,
+             en boucle, sans son ni controles - un decor, pas un lecteur.
+             L'affiche couvre le chargement et remplace la video la ou
+             l'autoplay est refuse ou desactive (ecran etroit, reduced-motion,
+             pas d'IntersectionObserver). Pas de preload ni d'autoplay dans le
+             HTML, pour la meme raison qu'au hero : c'est site.js qui decide. -->
+        <video class="shot__video" muted loop playsinline
+               preload="none" poster="assets/video/maison-poster.jpg"
+               width="480" height="854"
+               data-i18n-aria="maison.alt" aria-label="Broche de kebab, illustration animée">
+          <source src="assets/video/maison-480.webm" type="video/webm">
+          <source src="assets/video/maison-480.mp4" type="video/mp4">
+        </video>
         <figcaption data-i18n="maison.caption">Avenue Saint-Vincent de Paul, Dax</figcaption>
       </figure>
     </div>
@@ -454,13 +455,14 @@
   <img alt="">
 </dialog>
 
-<script src="assets/img/manifest.js?v=15"></script>
-<script src="assets/img/extras.js?v=15"></script>
-<script src="assets/img/photos.js?v=15"></script>
-<script src="assets/img/boards.js?v=15"></script>
-<script src="assets/img/posters.js?v=15"></script>
-<script src="data/menu.js?v=15"></script>
-<script src="data/reviews.js?v=15"></script>
-<script src="assets/js/site.js?v=15"></script>
+<script src="assets/img/manifest.js?v=16"></script>
+<script src="assets/img/extras.js?v=16"></script>
+<script src="assets/img/photos.js?v=16"></script>
+<script src="assets/img/cutouts.js?v=16"></script>
+<script src="assets/img/boards.js?v=16"></script>
+<script src="assets/img/posters.js?v=16"></script>
+<script src="data/menu.js?v=16"></script>
+<script src="data/reviews.js?v=16"></script>
+<script src="assets/js/site.js?v=16"></script>
 </body>
 </html>

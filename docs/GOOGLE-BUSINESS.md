@@ -55,7 +55,7 @@ Cinq choses qui rapportent, une fois pour toutes :
   accessible en fauteuil roulant*. Ce sont des filtres de recherche : un
   client qui cherche « kebab halal Dax » ne te trouve pas si ce n'est pas coché.
 - **Photos** : tu en as 61. Ajoute les quatre panneaux de la carte
-  (`menu/*.png`) — les gens cherchent les prix avant d'appeler.
+  (`_work/sources/boards/*.png`) — les gens cherchent les prix avant d'appeler.
 - **Menu** : Google laisse coller un lien de carte. Mets
   `https://autoaix0-sketch.github.io/taconaansite/#carte`
 - **Lien d'avis en un clic** : dans ton espace, cherche **Demander des avis**.
