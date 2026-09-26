@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://autoaix0-sketch.github.io/taconaansite/sitemap.xml
+Sitemap: https://taconaansite-eight.vercel.app/sitemap.xml

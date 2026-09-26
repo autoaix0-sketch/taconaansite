@@ -12,25 +12,20 @@ clients de toute cette affaire, et ça se règle en deux minutes.
 
 ## 1. Publier le site
 
-Le dépôt existe déjà. Il faut juste allumer l'hébergement gratuit.
+✅ Fait. Le site est en ligne sur Vercel, relié au dépôt GitHub : chaque
+`git push` sur `main` republie automatiquement.
 
-1. Va sur <https://github.com/sakkalkousay-source/taconaansite>
-2. Onglet **Settings** → menu de gauche, **Pages**
-3. Sous *Build and deployment* → *Source* : choisis **Deploy from a branch**
-4. *Branch* : **main**, dossier **/ (root)** → **Save**
-5. Attends 1 à 2 minutes, recharge la page
-
-Ton adresse sera :
+Ton adresse est :
 
 ```
-https://autoaix0-sketch.github.io/taconaansite/
+https://taconaansite-eight.vercel.app/
 ```
 
 Vérifie qu'elle s'ouvre bien avant de passer à la suite.
 
 > **Plus tard, si tu veux `taconaan.fr`** (~12 €/an) : achète le nom chez un
-> registrar, puis reviens dans Settings → Pages → *Custom domain*. Le site ne
-> bouge pas, seule l'adresse change. Dis-le moi et je te fais la manip.
+> registrar, puis dis-le moi — je le connecte au projet Vercel. Le site ne
+> bouge pas, seule l'adresse change.
 
 ---
 
@@ -57,7 +52,7 @@ Cinq choses qui rapportent, une fois pour toutes :
 - **Photos** : tu en as 61. Ajoute les quatre panneaux de la carte
   (`_work/sources/boards/*.png`) — les gens cherchent les prix avant d'appeler.
 - **Menu** : Google laisse coller un lien de carte. Mets
-  `https://autoaix0-sketch.github.io/taconaansite/#carte`
+  `https://taconaansite-eight.vercel.app/#carte`
 - **Lien d'avis en un clic** : dans ton espace, cherche **Demander des avis**.
   Google te donne un lien court du type `https://g.page/r/XXXXXXXX/review`.
   Copie-le dans `data/reviews.js`, ligne `writeUrl`. Le bouton « Laisser un

@@ -1,8 +1,8 @@
 # Taco Naan — le site
 
 Site vitrine d'un kebab-tacos-naan à Dax. Une seule page, statique, en trois
-langues (FR/ES/EN), publiée sur GitHub Pages :
-https://autoaix0-sketch.github.io/taconaansite/
+langues (FR/ES/EN), publiée sur Vercel :
+https://taconaansite-eight.vercel.app/
 
 ## Le seul fichier à modifier au quotidien
 
@@ -97,5 +97,5 @@ pas versionné (`.gitignore`) — il reste sur ce disque, à côté du dépôt.
 
 ## Déployer
 
-Le dépôt est public sur GitHub. Un `git push` sur `main` met le site à jour
-sur GitHub Pages en quelques minutes.
+Le dépôt est relié à Vercel (projet `taconaansite`). Un `git push` sur `main`
+met le site à jour en quelques secondes : https://taconaansite-eight.vercel.app/
