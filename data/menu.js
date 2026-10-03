@@ -118,7 +118,7 @@ window.TACONAAN_MENU = {
       "tiersOnly": [0, 1],
       "items": [
         { "name": "Barquette Kebab", "tiers": [8, 10] },
-        { "name": "Barquette Frites", "tiers": [3, 4.5] }
+        { "name": "Barquette Frites", "tiers": [30, 4.5] }
       ]
     },
     {
