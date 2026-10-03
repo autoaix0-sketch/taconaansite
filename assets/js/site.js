@@ -23,13 +23,11 @@
   var PHONE_HUMAN = '09 79 13 85 43';
   var PHONE_LINK = '+33979138543';
 
-  /* Les horaires. Même chose tous les jours, 7j/7.
-     En minutes depuis minuit : 11:30 = 690, 23:30 = 1410.
-     Si un jour de fermeture apparaît, voir la note dans openState(). */
-  var SERVICES = [
-    [11 * 60 + 30, 15 * 60],       // 11:30 – 15:00
-    [18 * 60, 23 * 60 + 30]        // 18:00 – 23:30
-  ];
+  /* Les horaires, les fermetures et les offres ne sont plus écrits ici :
+     ils viennent de data/hours.js et data/offers.js, que le tableau de bord
+     réécrit. Si hours.js manque, on retombe sur les horaires historiques. */
+  var DEFAULT_SERVICES = [['11:30', '15:00'], ['18:00', '23:30']];
+  var DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
   /* ---------------------------------------------------------------- textes */
 
@@ -88,7 +86,6 @@
       'venir.address': 'Adresse',
       'venir.phone': 'Téléphone',
       'venir.hours': 'Horaires',
-      'venir.hours.v': 'Tous les jours<span>11:30 – 15:00</span><span>18:00 – 23:30</span>',
       'venir.service': 'Service',
       'venir.service.v': 'Sur place et à emporter. Commande par téléphone. Nous ne livrons pas.',
       'venir.route': 'Itinéraire',
@@ -107,6 +104,15 @@
       'closes.in': 'ferme dans',
       'opens.at': 'ouvre à',
       'opens.tomorrow': 'ouvre demain à',
+      'opens.on': 'rouvre le',
+      'at': 'à',
+      'closed.exc': 'Fermé exceptionnellement',
+      'closure.on': 'Fermé le',
+      'closure.range': 'Fermé du {a} au {b}',
+      'hours.all': 'Tous les jours',
+      'offres.eyebrow': 'En ce moment',
+      'offres.h2': 'Les offres du moment',
+      'offer.until': 'Jusqu’au',
       'min': 'min',
       'close': 'Fermer',
 
@@ -175,7 +181,6 @@
       'venir.address': 'Dirección',
       'venir.phone': 'Teléfono',
       'venir.hours': 'Horario',
-      'venir.hours.v': 'Todos los días<span>11:30 – 15:00</span><span>18:00 – 23:30</span>',
       'venir.service': 'Servicio',
       'venir.service.v': 'En local y para llevar. Pedidos por teléfono. No repartimos a domicilio.',
       'venir.route': 'Cómo llegar',
@@ -194,6 +199,15 @@
       'closes.in': 'cierra en',
       'opens.at': 'abre a las',
       'opens.tomorrow': 'abre mañana a las',
+      'opens.on': 'reabre el',
+      'at': 'a las',
+      'closed.exc': 'Cerrado excepcionalmente',
+      'closure.on': 'Cerrado el',
+      'closure.range': 'Cerrado del {a} al {b}',
+      'hours.all': 'Todos los días',
+      'offres.eyebrow': 'Ahora mismo',
+      'offres.h2': 'Las ofertas del momento',
+      'offer.until': 'Hasta el',
       'min': 'min',
       'close': 'Cerrar',
 
@@ -262,7 +276,6 @@
       'venir.address': 'Address',
       'venir.phone': 'Phone',
       'venir.hours': 'Opening hours',
-      'venir.hours.v': 'Every day<span>11:30 – 15:00</span><span>18:00 – 23:30</span>',
       'venir.service': 'Service',
       'venir.service.v': 'Eat in and takeaway. Order by phone. We do not deliver.',
       'venir.route': 'Directions',
@@ -281,6 +294,15 @@
       'closes.in': 'closes in',
       'opens.at': 'opens at',
       'opens.tomorrow': 'opens tomorrow at',
+      'opens.on': 'reopens',
+      'at': 'at',
+      'closed.exc': 'Temporarily closed',
+      'closure.on': 'Closed on',
+      'closure.range': 'Closed {a} – {b}',
+      'hours.all': 'Every day',
+      'offres.eyebrow': 'Right now',
+      'offres.h2': 'Current offers',
+      'offer.until': 'Until',
       'min': 'min',
       'close': 'Close',
 
@@ -302,6 +324,9 @@
   var MENU = window.TACONAAN_MENU || { categories: [], extras: [] };
   var REVIEWS = window.TACONAAN_REVIEWS || { items: [] };
   var IMAGES = window.TACONAAN_IMAGES || {};
+  var UPLOADS = window.TACONAAN_UPLOADS || {};
+  var HOURS = window.TACONAAN_HOURS || {};
+  var OFFERS = (window.TACONAAN_OFFERS && window.TACONAAN_OFFERS.offers) || [];
 
   /* ------------------------------------------------------------- outillage */
 
@@ -354,6 +379,10 @@
      pour que la page ne saute pas pendant le chargement. */
   function picture(key, alt, sizes, eager) {
     var entry = IMAGES[key] || IMAGES[String(key).replace(/-/g, '_')];
+    var base = 'assets/img/';
+    /* Les photos envoyées depuis le tableau de bord vivent à part, dans
+       assets/img/uploads/, avec leur propre manifeste. */
+    if (!entry && UPLOADS[key]) { entry = UPLOADS[key]; base = 'assets/img/uploads/'; }
     if (!entry) return '';
 
     var stem = escapeHtml(entry.stem);
@@ -361,13 +390,13 @@
 
     function srcset(ext) {
       return entry.sizes.map(function (s) {
-        return 'assets/img/' + stem + '-' + s[0] + '.' + ext + ' ' + s[0] + 'w';
+        return base + stem + '-' + s[0] + '.' + ext + ' ' + s[0] + 'w';
       }).join(', ');
     }
 
     return '<picture>' +
       '<source type="image/avif" srcset="' + srcset('avif') + '" sizes="' + sizes + '">' +
-      '<img src="assets/img/' + stem + '-' + last[0] + '.webp"' +
+      '<img src="' + base + stem + '-' + last[0] + '.webp"' +
       ' srcset="' + srcset('webp') + '" sizes="' + sizes + '"' +
       ' width="' + last[0] + '" height="' + last[1] + '"' +
       ' alt="' + escapeHtml(alt) + '"' +
@@ -378,18 +407,42 @@
 
   /* --------------------------------------------------------- ouvert/fermé */
 
-  /* L'heure de Paris, quel que soit le fuseau du visiteur. Un client à
-     Londres doit voir « fermé » quand c'est fermé à Dax, pas chez lui. */
-  function parisMinutes() {
+  /* La date, l'heure et le jour de la semaine à Paris, quel que soit le fuseau
+     du visiteur. Un client à Londres doit voir « fermé » quand c'est fermé à
+     Dax, pas chez lui. `date` est « AAAA-MM-JJ », `minutes` part de minuit,
+     `day` vaut 0 le dimanche. */
+  function parisNow() {
     var parts = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false
+      timeZone: 'Europe/Paris', hourCycle: 'h23',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit'
     }).formatToParts(new Date());
-    var h = 0, m = 0;
-    parts.forEach(function (p) {
-      if (p.type === 'hour') h = parseInt(p.value, 10);
-      if (p.type === 'minute') m = parseInt(p.value, 10);
-    });
-    return h * 60 + m;
+    var v = {};
+    parts.forEach(function (p) { v[p.type] = p.value; });
+    var date = v.year + '-' + v.month + '-' + v.day;
+    return {
+      date: date,
+      minutes: (parseInt(v.hour, 10) % 24) * 60 + parseInt(v.minute, 10),
+      day: dayOfWeek(date)
+    };
+  }
+
+  /* Calcul de calendrier en UTC sur des chaînes « AAAA-MM-JJ » : aucun fuseau
+     ni changement d'heure ne peut décaler un jour. */
+  function utcDate(iso) {
+    var p = iso.split('-');
+    return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+  }
+  function dayOfWeek(iso) { return utcDate(iso).getUTCDay(); }
+  function addDays(iso, n) {
+    var d = utcDate(iso);
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function toMinutes(hhmmText) {
+    var p = String(hhmmText).split(':');
+    return (+p[0]) * 60 + (+p[1]);
   }
 
   function hhmm(minutes) {
@@ -398,16 +451,69 @@
     return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
   }
 
-  /* Renvoie { open: bool, label: '...' }.
-     Si un jour de fermeture arrive un jour, c'est ici qu'il faut l'ajouter :
-     il suffit de tester le jour de la semaine avant la boucle. */
-  function openState() {
-    var now = parisMinutes();
+  function capitalize(text) { return text.charAt(0).toUpperCase() + text.slice(1); }
 
-    for (var i = 0; i < SERVICES.length; i++) {
-      var start = SERVICES[i][0], end = SERVICES[i][1];
-      if (now >= start && now < end) {
-        var left = end - now;
+  /* « dimanche 12 octobre », dans la langue du visiteur. */
+  function longDate(iso, withWeekday) {
+    var opts = { timeZone: 'UTC', day: 'numeric', month: 'long' };
+    if (withWeekday) opts.weekday = 'long';
+    return new Intl.DateTimeFormat(LOCALES[lang], opts).format(utcDate(iso));
+  }
+
+  /* Les services d'un jour de la semaine, en minutes. [] = fermé. */
+  function servicesOfDay(dayIndex) {
+    var week = HOURS.week;
+    var list = week ? week[DAY_KEYS[dayIndex]] : DEFAULT_SERVICES;
+    return (list || []).map(function (s) { return [toMinutes(s[0]), toMinutes(s[1])]; });
+  }
+
+  /* La fermeture exceptionnelle qui couvre cette date, s'il y en a une. */
+  function closureOn(iso) {
+    var list = HOURS.closures || [];
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].from <= iso && iso <= list[i].to) return list[i];
+    }
+    return null;
+  }
+
+  function servicesOn(iso) {
+    return closureOn(iso) ? [] : servicesOfDay(dayOfWeek(iso));
+  }
+
+  /* Le prochain jour ouvert strictement après `iso`, avec son premier
+     service. On borne la recherche : une fermeture d'été dure des semaines,
+     pas des années. */
+  function nextOpening(iso) {
+    for (var n = 1; n <= 90; n++) {
+      var date = addDays(iso, n);
+      var services = servicesOn(date);
+      if (services.length) return { date: date, start: services[0][0], inDays: n };
+    }
+    return null;
+  }
+
+  function reopenLabel(iso) {
+    var next = nextOpening(iso);
+    if (!next) return '';
+    return (next.inDays === 1
+      ? t('opens.tomorrow')
+      : t('opens.on') + ' ' + longDate(next.date, true) + ' ' + t('at')) +
+      ' ' + hhmm(next.start);
+  }
+
+  /* Renvoie { open: bool, label: '...', title?: '...' }. */
+  function openState() {
+    var now = parisNow();
+
+    if (closureOn(now.date)) {
+      return { open: false, title: t('closed.exc'), label: reopenLabel(now.date) };
+    }
+
+    var services = servicesOfDay(now.day);
+    for (var i = 0; i < services.length; i++) {
+      var start = services[i][0], end = services[i][1];
+      if (now.minutes >= start && now.minutes < end) {
+        var left = end - now.minutes;
         var label = left <= 60
           ? t('closes.in') + ' ' + left + ' ' + t('min')
           : t('closes.at') + ' ' + hhmm(end);
@@ -415,12 +521,12 @@
       }
     }
 
-    for (var j = 0; j < SERVICES.length; j++) {
-      if (now < SERVICES[j][0]) {
-        return { open: false, label: t('opens.at') + ' ' + hhmm(SERVICES[j][0]) };
+    for (var j = 0; j < services.length; j++) {
+      if (now.minutes < services[j][0]) {
+        return { open: false, label: t('opens.at') + ' ' + hhmm(services[j][0]) };
       }
     }
-    return { open: false, label: t('opens.tomorrow') + ' ' + hhmm(SERVICES[0][0]) };
+    return { open: false, label: reopenLabel(now.date) };
   }
 
   function paintStatus() {
@@ -428,9 +534,136 @@
     $$('[data-status]').forEach(function (node) {
       node.className = 'status ' + (state.open ? 'status--open' : 'status--closed');
       node.innerHTML = '<span class="status__dot"></span><span><b>' +
-        escapeHtml(state.open ? t('open') : t('closed')) + '</b> · ' +
-        escapeHtml(state.label) + '</span>';
+        escapeHtml(state.title || (state.open ? t('open') : t('closed'))) + '</b>' +
+        (state.label ? ' · ' + escapeHtml(state.label) : '') + '</span>';
     });
+  }
+
+  /* ----------------------------------------------- horaires et fermetures */
+
+  function servicesText(services) {
+    return services.map(function (s) {
+      return '<span>' + hhmm(s[0]) + ' – ' + hhmm(s[1]) + '</span>';
+    }).join('');
+  }
+
+  function dayName(dayIndex) {
+    /* Le 7 janvier 2024 est un dimanche : 7 + dayIndex donne le bon jour. */
+    return capitalize(new Intl.DateTimeFormat(LOCALES[lang], {
+      timeZone: 'UTC', weekday: 'long'
+    }).format(new Date(Date.UTC(2024, 0, 7 + dayIndex))));
+  }
+
+  /* Tous les jours identiques : « Tous les jours » et les services, comme
+     avant. Sinon des groupes de jours consécutifs, du lundi au dimanche. */
+  function renderHours() {
+    var host = $('[data-hours]');
+    if (!host) return;
+
+    var order = [1, 2, 3, 4, 5, 6, 0];
+    var days = order.map(function (d) {
+      var services = servicesOfDay(d);
+      return { day: d, services: services, sig: JSON.stringify(services) };
+    });
+
+    var groups = [];
+    days.forEach(function (entry) {
+      var last = groups[groups.length - 1];
+      if (last && last.sig === entry.sig) last.days.push(entry.day);
+      else groups.push({ sig: entry.sig, services: entry.services, days: [entry.day] });
+    });
+
+    if (groups.length === 1) {
+      host.innerHTML = escapeHtml(t('hours.all')) +
+        (groups[0].services.length ? servicesText(groups[0].services)
+                                   : '<span>' + escapeHtml(t('closed')) + '</span>');
+      return;
+    }
+
+    host.innerHTML = groups.map(function (g) {
+      var label = dayName(g.days[0]) +
+        (g.days.length > 1 ? ' – ' + dayName(g.days[g.days.length - 1]) : '');
+      return '<span class="hours__group"><b>' + escapeHtml(label) + '</b>' +
+        (g.services.length ? servicesText(g.services)
+                           : '<span>' + escapeHtml(t('closed')) + '</span>') +
+        '</span>';
+    }).join('');
+  }
+
+  /* « Ouvert 7j/7 » ne se dit que si chaque jour a au moins un service. */
+  function openEveryDay() {
+    for (var d = 0; d < 7; d++) if (!servicesOfDay(d).length) return false;
+    return true;
+  }
+
+  /* Bandeau de fermeture exceptionnelle : affiché le jour même et pendant les
+     sept jours qui précèdent, pour prévenir les habitués. Le visiteur peut le
+     fermer ; il revient s'il change de fermeture. */
+  function renderNotice() {
+    var host = $('[data-notice]');
+    if (!host) return;
+
+    var now = parisNow().date;
+    var horizon = addDays(now, 7);
+    var closure = null;
+    (HOURS.closures || []).forEach(function (c) {
+      if (c.to >= now && c.from <= horizon && (!closure || c.from < closure.from)) closure = c;
+    });
+    if (!closure) { host.hidden = true; return; }
+
+    var key = 'taconaan.notice.' + closure.from + '.' + closure.to;
+    var dismissed = false;
+    try { dismissed = sessionStorage.getItem(key) === '1'; } catch (e) { /* ignore */ }
+    if (dismissed) { host.hidden = true; return; }
+
+    var when = closure.from === closure.to
+      ? t('closure.on') + ' ' + longDate(closure.from, true)
+      : t('closure.range').replace('{a}', longDate(closure.from)).replace('{b}', longDate(closure.to));
+    var note = pick(closure.note);
+
+    host.innerHTML = '<p><b>' + escapeHtml(when) + '</b>' +
+      (note ? ' — ' + escapeHtml(note) : '') + '</p>' +
+      '<button type="button" class="notice__close" aria-label="' + escapeHtml(t('close')) + '">×</button>';
+    host.hidden = false;
+
+    $('.notice__close', host).addEventListener('click', function () {
+      host.hidden = true;
+      try { sessionStorage.setItem(key, '1'); } catch (e) { /* ignore */ }
+    });
+  }
+
+  /* ------------------------------------------------------------ les offres */
+
+  /* Une offre est visible du jour de début au jour de fin inclus, à l'heure de
+     Paris : elle apparaît et disparaît toute seule. */
+  function activeOffers() {
+    var today = parisNow().date;
+    return OFFERS.filter(function (o) { return o.start <= today && today <= o.end; });
+  }
+
+  function renderOffers() {
+    var section = $('#offres');
+    var link = $('[data-offers-link]');
+    var grid = $('.offres__grid');
+    if (!section || !grid) return;
+
+    var list = activeOffers();
+    section.hidden = !list.length;
+    if (link) link.hidden = !list.length;
+    if (!list.length) { grid.innerHTML = ''; return; }
+
+    grid.innerHTML = list.map(function (o) {
+      var pic = o.photo ? picture(o.photo, pick(o.title), '(min-width: 52rem) 22rem, 90vw') : '';
+      return '<article class="deal' + (pic ? '' : ' deal--plain') + '" data-reveal>' +
+        (pic ? '<div class="deal__media">' + pic + '</div>' : '') +
+        '<div class="deal__body">' +
+          '<p class="deal__until">' + escapeHtml(t('offer.until') + ' ' + longDate(o.end, true)) + '</p>' +
+          '<h3>' + escapeHtml(pick(o.title)) + '</h3>' +
+          (o.text ? '<p class="deal__text">' + escapeHtml(pick(o.text)) + '</p>' : '') +
+          (o.price != null ? '<p class="deal__price">' + escapeHtml(money(o.price)) + '</p>' : '') +
+        '</div>' +
+      '</article>';
+    }).join('');
   }
 
   /* ------------------------------------------------------------- la carte */
@@ -478,8 +711,20 @@
     var labels = (MENU.tierLabels && MENU.tierLabels[lang]) ||
                  (MENU.tierLabels && MENU.tierLabels.fr) || [];
 
-    grid.innerHTML = MENU.categories.map(function (cat) {
-      var entry = IMAGES[cat.image] || {};
+    /* Un plat masqué depuis le tableau de bord (épuisé, retiré de la carte)
+       disparaît ; une catégorie sans plat visible disparaît avec lui. */
+    var categories = MENU.categories.map(function (cat) {
+      var shown = {};
+      for (var k in cat) if (Object.prototype.hasOwnProperty.call(cat, k)) shown[k] = cat[k];
+      shown.items = cat.items.filter(function (it) { return !it.hidden; });
+      return shown;
+    }).filter(function (cat) { return cat.items.length > 0; });
+
+    grid.innerHTML = categories.map(function (cat) {
+      /* Une photo envoyée depuis le tableau de bord remplace celle de la
+         catégorie. */
+      var imageKey = cat.photo && UPLOADS[cat.photo] ? cat.photo : cat.image;
+      var entry = IMAGES[imageKey] || UPLOADS[imageKey] || {};
       var kind = cat.kind || entry.kind || 'cutout';
 
       /* Les burgers et le Tex-Mex n ont pas de formule « + Frite » :
@@ -526,7 +771,7 @@
             '<p>' + escapeHtml(pick(cat.tagline)) + '</p>' +
           '</div>' +
           '<div class="ticket__thumb" data-kind="' + escapeHtml(kind) + '">' +
-            picture(cat.image, cat.name, '(min-width: 52rem) 8rem, 6rem') +
+            picture(imageKey, cat.name, '(min-width: 52rem) 8rem, 6rem') +
           '</div>' +
         '</div>' +
         '<ul class="ticket__list">' + header + lines + '</ul>' +
@@ -537,7 +782,7 @@
     if (chips) {
       chips.innerHTML = '<button type="button" data-filter="*" aria-pressed="true">' +
         escapeHtml(t('carte.all')) + '</button>' +
-        MENU.categories.map(function (cat) {
+        categories.map(function (cat) {
           return '<button type="button" data-filter="' + escapeHtml(cat.id) +
             '" aria-pressed="false">' + escapeHtml(cat.name) + '</button>';
         }).join('');
@@ -925,10 +1170,16 @@
 
     try { localStorage.setItem('taconaan.lang', lang); } catch (e) { /* navigation privée */ }
 
+    /* Le fait « Ouvert 7j/7 » n'est vrai que si aucun jour n'est fermé. */
+    $$('[data-open7]').forEach(function (node) { node.hidden = !openEveryDay(); });
+
+    renderOffers();
     renderMenu();
     renderBoards();
     renderReviews();
     renderAffiches();
+    renderHours();
+    renderNotice();
     paintStatus();
     wireReveal();
   }

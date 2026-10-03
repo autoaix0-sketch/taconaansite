@@ -4,11 +4,12 @@ import { readFileSync, existsSync } from 'node:fs';
 
 globalThis.window = {};
 for (const f of ['assets/img/manifest.js', 'assets/img/extras.js', 'assets/img/photos.js',
-               'assets/img/cutouts.js', 'data/menu.js']) {
+               'assets/img/cutouts.js', 'assets/img/uploads.js', 'data/menu.js']) {
   new Function(readFileSync(f, 'utf8')).call(globalThis);
 }
 const IMAGES = window.TACONAAN_IMAGES;
 const MENU = window.TACONAAN_MENU;
+const UPLOADS = window.TACONAAN_UPLOADS || {};
 
 let errors = 0, checked = 0;
 const seen = new Set();
@@ -39,10 +40,30 @@ function files(where, key, required = true) {
   return true;
 }
 
+// Les photos envoyees depuis le tableau de bord vivent dans assets/img/uploads/.
+function uploadFiles(where, key) {
+  const entry = UPLOADS[key];
+  if (!entry) { console.log(`  ERREUR  ${where}: cle « ${key} » absente de uploads.js`); errors++; return false; }
+  for (const [w] of entry.sizes) {
+    for (const ext of ['webp', 'avif']) {
+      const path = `assets/img/uploads/${entry.stem}-${w}.${ext}`;
+      checked++;
+      if (!existsSync(path)) { console.log(`  ERREUR  ${where}: ${path} manquant`); errors++; }
+    }
+  }
+  return true;
+}
+
 console.log('\n1. les vignettes de la carte');
 for (const cat of MENU.categories) {
+  // Une categorie creee depuis le tableau de bord n'a qu'une photo envoyee.
+  if (cat.image === undefined && cat.photo) {
+    if (uploadFiles(`categorie ${cat.id}`, cat.photo)) console.log(`  ok      ${cat.id.padEnd(11)} -> photo ${cat.photo}`);
+    continue;
+  }
   const ok = files(`categorie ${cat.id}`, cat.image);
   if (ok) console.log(`  ok      ${cat.id.padEnd(11)} -> ${entryOf(cat.image).stem}`);
+  if (cat.photo) uploadFiles(`categorie ${cat.id} (photo)`, cat.photo);
 }
 
 console.log('\n2. les choix (pain, viandes, sauces, supplements)');

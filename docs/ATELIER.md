@@ -8,7 +8,7 @@ Il ne suppose aucune connaissance. Chaque mot compliqué est expliqué la
 première fois qu'il apparaît.
 
 **Rien de ce qui est décrit ici n'est encore construit**, sauf l'établi (§2),
-qui existe déjà et qui marche.
+qui existe déjà et qui marche, et le tableau de bord du propriétaire (§9).
 
 ---
 
@@ -516,6 +516,45 @@ Passe-le en mode plan et redemande. Neuf fois sur dix, c'est que la demande
 
 Ouvre une nouvelle session. La mémoire de la précédente ne suit pas — c'est
 une fonctionnalité, pas un bug.
+
+---
+
+---
+
+## §9. Le tableau de bord du propriétaire
+
+*Ajouté le 2 octobre 2026.*
+
+Le propriétaire change lui-même, depuis son téléphone, les offres, la carte
+(prix, plats et catégories ajoutés, renommés, supprimés, déplacés, masqués),
+les photos et les horaires. Il a aussi un historique avec « Annuler », un
+assistant qui rédige offres et textes de posts, des affiches aux couleurs de la
+marque et un onglet qui propose des réponses aux avis Google. L'outil vit dans un projet
+séparé, **`taconaan-admin`** (voir son `README.md`) ; il écrit dans ce site par
+**un commit sur `main`**.
+
+Ce que ça change pour toi :
+
+- **`git pull` avant de travailler.** Le tableau de bord pousse sur `main` ; sans
+  pull, ton `git push` sera refusé.
+- **Ces fichiers sont à lui** : `data/menu.js`, `data/offers.js`,
+  `data/hours.js`, `assets/img/uploads.js`, `assets/img/uploads/`, et le bloc
+  JSON-LD de `index.html` (entre `LDJSON:START` et `LDJSON:END`). Du JSON pur :
+  si tu les modifies à la main, garde-les valides, il refuse de les écraser
+  sinon. Détail dans `README.md`.
+- **Pas de `?v=` sur ces fichiers** : `vercel.json` les sert en `no-cache`.
+  Le `?v=` ne sert plus que pour `site.js` et `site.css`.
+- **Annuler une publication** : le bouton « Annuler » de l'historique ajoute un
+  commit « Annulation : … — via tableau de bord » (jamais de retour en arrière
+  dans Git). Pour tes propres commits, `git revert <commit>` comme avant.
+- Le blocage anti-essais, la traduction et la sécurité du jeton : voir le
+  `README.md` de `taconaan-admin`.
+
+Ce qui n'existe **pas encore** : la publication automatique sur Instagram et
+Facebook (elle demande un compte Meta Business que seul le propriétaire peut
+créer). Les réponses aux avis sont **proposées**, jamais postées : le
+propriétaire les copie et les poste lui-même, conformément à la règle « rien ne
+parle à un client sans que tu l'aies lu ».
 
 ---
 
