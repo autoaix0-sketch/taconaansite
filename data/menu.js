@@ -191,7 +191,7 @@ window.TACONAAN_MENU = {
       "items": [
         {
           "name": "Menu Kids",
-          "price": 6.5,
+          "price": 10,
           "note": {
             "fr": "kebab ou nuggets · frites · boisson · sucette · ballon · surprise",
             "es": "kebab o nuggets · patatas · bebida · piruleta · globo · sorpresa",
