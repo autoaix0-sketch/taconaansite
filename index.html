@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/img/logo-white-320.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=16">
+<link rel="stylesheet" href="assets/css/site.css?v=18">
 
 <!-- Fiche établissement pour Google.
 
@@ -37,6 +37,7 @@
      l'affichage enrichi. La note 4,5 est affichée visuellement, sourcée, avec
      un lien vers la fiche Google — l'effet de confiance est le même, sans le
      risque. -->
+<!-- LDJSON:START -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -61,21 +62,40 @@
   "hasMap": "https://www.google.com/maps/place/?cid=14156280289773585904",
   "sameAs": ["https://www.instagram.com/taco_naan_dax/"],
   "openingHoursSpecification": [
-    { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "11:30", "closes": "15:00" },
-    { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens": "18:00", "closes": "23:30" }
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "11:30",
+      "closes": "15:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "18:00",
+      "closes": "23:30"
+    }
+  ],
+  "specialOpeningHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "validFrom": "2026-10-04",
+      "validThrough": "2026-10-04",
+      "opens": "00:00",
+      "closes": "00:00"
+    }
   ],
   "acceptsReservations": false,
   "publicAccess": true
 }
 </script>
+<!-- LDJSON:END -->
 </head>
 
 <body>
 <a class="skip" href="#top" data-i18n="skip">Aller au contenu</a>
+
+<!-- Fermeture exceptionnelle : rempli par assets/js/site.js depuis data/hours.js -->
+<div class="notice" data-notice role="status" hidden></div>
 
 <!-- ======================================================= barre supérieure -->
 <header class="topbar" data-stuck="false">
@@ -86,6 +106,7 @@
   </a>
 
   <nav class="topbar__nav" aria-label="Navigation">
+    <a href="#offres"  data-i18n="offres.eyebrow" data-offers-link hidden>En ce moment</a>
     <a href="#carte"   data-i18n="nav.carte">La carte</a>
     <a href="#panneaux" data-i18n="boards.eyebrow">La carte au comptoir</a>
     <a href="#avis"    data-i18n="nav.avis">Les avis</a>
@@ -161,7 +182,7 @@
           <li data-strong>Halal</li>
           <li data-i18n="fact.1">Sur place &amp; à emporter</li>
           <li data-strong data-i18n="fact.3">Pas de livraison</li>
-          <li data-i18n="fact.4">Ouvert 7j/7</li>
+          <li data-i18n="fact.4" data-open7>Ouvert 7j/7</li>
         </ul>
       </div>
 
@@ -188,6 +209,17 @@
           </span>
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== les offres -->
+  <!-- Rempli par assets/js/site.js depuis data/offers.js. Masquée tant qu'aucune
+       offre n'est en cours. -->
+  <section class="offres section-pad" id="offres" hidden>
+    <div class="wrap">
+      <p class="eyebrow"><b>★</b> <span data-i18n="offres.eyebrow">En ce moment</span></p>
+      <h2 class="offres__title" data-i18n="offres.h2">Les offres du moment</h2>
+      <div class="offres__grid"></div>
     </div>
   </section>
 
@@ -367,7 +399,7 @@
             <div class="info-row">
               <dt data-i18n="venir.hours">Horaires</dt>
               <dd>
-                <span class="hours" data-i18n-html="venir.hours.v">
+                <span class="hours" data-hours>
                   Tous les jours<span>11:30 – 15:00</span><span>18:00 – 23:30</span>
                 </span>
                 <span class="status" data-status></span>
@@ -455,14 +487,17 @@
   <img alt="">
 </dialog>
 
-<script src="assets/img/manifest.js?v=16"></script>
-<script src="assets/img/extras.js?v=16"></script>
-<script src="assets/img/photos.js?v=16"></script>
-<script src="assets/img/cutouts.js?v=16"></script>
-<script src="assets/img/boards.js?v=16"></script>
-<script src="assets/img/posters.js?v=16"></script>
-<script src="data/menu.js?v=16"></script>
-<script src="data/reviews.js?v=16"></script>
-<script src="assets/js/site.js?v=16"></script>
+<script src="assets/img/manifest.js?v=18"></script>
+<script src="assets/img/extras.js?v=18"></script>
+<script src="assets/img/photos.js?v=18"></script>
+<script src="assets/img/cutouts.js?v=18"></script>
+<script src="assets/img/boards.js?v=18"></script>
+<script src="assets/img/posters.js?v=18"></script>
+<script src="assets/img/uploads.js"></script>
+<script src="data/menu.js"></script>
+<script src="data/offers.js"></script>
+<script src="data/hours.js"></script>
+<script src="data/reviews.js?v=18"></script>
+<script src="assets/js/site.js?v=18"></script>
 </body>
 </html>

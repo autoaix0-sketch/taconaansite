@@ -4,37 +4,89 @@ Site vitrine d'un kebab-tacos-naan à Dax. Une seule page, statique, en trois
 langues (FR/ES/EN), publiée sur Vercel :
 https://taconaansite-eight.vercel.app/
 
-## Le seul fichier à modifier au quotidien
+## Ce qui change au quotidien : les fichiers `data/`
 
-**[`data/menu.js`](data/menu.js)** — la carte et les prix. Tout changement de
-prix se fait ici, rien d'autre à toucher.
+| Fichier | Contenu |
+|---|---|
+| [`data/menu.js`](data/menu.js) | La carte et les prix |
+| [`data/offers.js`](data/offers.js) | Les offres du moment (section « En ce moment ») |
+| [`data/hours.js`](data/hours.js) | Les horaires de la semaine et les fermetures exceptionnelles |
+| [`assets/img/uploads.js`](assets/img/uploads.js) | Les photos ajoutées (fichiers dans `assets/img/uploads/`) |
+| [`data/reviews.js`](data/reviews.js) | La note Google, à relever 2 fois par an |
 
-Pour mettre à jour la note Google (2 fois par an) :
-**[`data/reviews.js`](data/reviews.js)** — `rating` et `count`. Le score,
-le titre de la section avis et le bouton « Voir les … avis » le lisent tous
-les trois depuis ce seul fichier, dans les trois langues.
+Les quatre premiers sont **écrits par le tableau de bord** (projet séparé
+`taconaan-admin`, en construction) : il fait un commit sur `main`, Vercel
+republie. **Fais donc un `git pull` avant de travailler à la main**, sinon ton
+`git push` sera refusé.
 
-## ⚠️ Après avoir changé un prix : monter le `?v=`
+Ces fichiers sont du **JSON pur** (guillemets doubles, pas de virgule finale,
+pas de commentaire dans les données) précédé d'un commentaire d'en-tête. Si tu
+les modifies à la main, garde-les ainsi : le tableau de bord les relit tels
+quels et refuse d'écrire sur un fichier qu'il ne comprend pas.
 
-Dans `index.html`, tous les fichiers sont appelés avec `?v=16` à la fin :
+`data/reviews.js` reste écrit à la main : `rating` et `count`. Le score, le
+titre de la section avis et le bouton « Voir les … avis » le lisent tous les
+trois depuis ce seul fichier, dans les trois langues.
 
-```html
-<script src="data/menu.js?v=16"></script>
-```
+### La carte (`data/menu.js`)
 
-Ce numéro est ce qui force le navigateur d'un client déjà venu à retélécharger
-le fichier. **Si tu changes un prix sans monter ce numéro, les clients qui sont
-déjà venus continuent de voir l'ancien prix**, parfois pendant des jours.
+Le tableau de bord sait ajouter, renommer, supprimer et déplacer les plats et
+les catégories ; à la main, voici ce qu'il écrit.
 
-À chaque changement dans `data/menu.js`, `data/reviews.js`, `assets/js/site.js`
-ou `assets/css/site.css`, remplace donc partout `?v=16` par `?v=17` (puis 18,
-19…) — dans `index.html` **et** dans `404.html` :
+Chaque catégorie a un `id`, un `num` (deux chiffres, la place dans la carte),
+un `name`, une `image` (clé du manifeste d'images) **ou** une `photo` envoyée
+(c'est le cas d'une catégorie créée depuis le tableau de bord), un `tagline`
+`{fr, es, en}` et des `items`. Un plat prend l'une de ces formes :
+
+- `{ "name": "Tacos Simple", "tiers": [6.5, 7.5, 8.5] }` — trois colonnes
+  *Seul / + Frite / + Menu* (`null` = pas de prix dans cette colonne)
+- `{ "name": "Café", "price": 1.5 }` — un seul prix
+- `{ "name": "Thé", "free": true }` — affiche « offert »
+
+Champs facultatifs : `note` `{fr, es, en}` sous le nom du plat ; `hidden: true`
+sur un plat pour le retirer de la carte sans l'effacer (une catégorie dont
+tous les plats sont masqués disparaît aussi) ; `photo` sur une catégorie pour
+remplacer son image par une photo ajoutée (clé de `uploads.js`, toujours de la
+forme `up-…`) ; `tiersOnly` et `tierLabels` pour les catégories qui n'ont pas
+les trois colonnes habituelles.
+
+### Les offres (`data/offers.js`)
+
+`{ id, title {fr,es,en}, text {fr,es,en} | null, price | null, photo | null,
+start, end }`, dates au format `AAAA-MM-JJ`, **heure de Paris**. Une offre
+s'affiche du jour `start` au jour `end` inclus, puis disparaît toute seule. La
+section entière est cachée quand aucune offre n'est en cours.
+
+### Les horaires (`data/hours.js`)
+
+`week` donne, pour chaque jour (`mon`…`sun`), de 0 à 2 services
+`["11:30", "15:00"]` (`[]` = fermé ce jour-là). `closures` liste les
+fermetures exceptionnelles `{ from, to, note {fr,es,en} }` : un bandeau
+prévient les visiteurs dès 7 jours avant, et le badge « ouvert / fermé » passe
+à « Fermé exceptionnellement ». « Ouvert 7j/7 » disparaît tout seul si un jour
+est fermé.
+
+## `?v=` : seulement pour le code
+
+Dans `index.html`, `site.js`, `site.css` et les manifestes d'images sont
+appelés avec `?v=18` à la fin. Ce numéro force le navigateur d'un client déjà
+venu à retélécharger le fichier.
+
+**Si tu modifies `assets/js/site.js` ou `assets/css/site.css`**, remplace
+partout `?v=18` par `?v=19` (puis 20…) — dans `index.html` **et** dans
+`404.html` :
 
 ```bash
-sed -i 's/?v=16"/?v=17"/g' index.html 404.html
+sed -i 's/?v=18"/?v=19"/g' index.html 404.html
 ```
 
-Les images n'ont pas besoin de ça : elles changent de nom quand elles changent.
+Les fichiers `data/menu.js`, `data/offers.js`, `data/hours.js` et
+`assets/img/uploads.js` n'ont **pas** de `?v=` : `vercel.json` leur donne
+`Cache-Control: no-cache`, le navigateur revérifie donc à chaque visite. Un
+changement de prix ou d'offre est visible dès que Vercel a republié.
+
+Les images n'ont pas besoin de ça non plus : elles changent de nom quand elles
+changent.
 
 ## Avant de publier — la liste
 

@@ -1122,6 +1122,98 @@ a { color: inherit; }
 .hours span { display: block; }
 .info-row dd .status { margin-top: .6rem; }
 
+/* Horaires qui diffèrent d'un jour à l'autre : un groupe par série de jours. */
+.hours__group { margin-top: .75rem; }
+.hours__group:first-child { margin-top: 0; }
+.hours__group b { display: block; font-weight: 500; color: var(--cream); }
+
+/* ------------------------------------------- fermeture exceptionnelle */
+
+.notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  padding: .65rem var(--gutter);
+  background: var(--yellow);
+  color: var(--void);
+  font-family: var(--mono);
+  font-size: .78rem;
+  line-height: 1.45;
+  letter-spacing: .03em;
+}
+.notice[hidden] { display: none; }
+.notice p { margin: 0; text-align: center; }
+.notice b { font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.notice__close {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -.7rem -.9rem -.7rem 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.notice__close:focus-visible { outline-color: var(--void); }
+
+/* ------------------------------------------------------------- les offres */
+
+.offres[hidden] { display: none; }
+.offres__title { margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
+.offres__grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+
+/* Une offre = une carte, comme la carte du menu, mais coiffée d'un filet
+   jaune plein : c'est la seule chose de la page qui crie un peu. */
+.deal {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, var(--coal), var(--slate));
+  border: 1px solid var(--line-warm);
+  border-top: 3px solid var(--yellow);
+  overflow: hidden;
+}
+/* Sans photo, la carte prend la hauteur de son texte au lieu de s'étirer
+   jusqu'à celle de sa voisine. */
+.deal--plain { align-self: start; }
+.deal__media { aspect-ratio: 16 / 10; overflow: hidden; background: var(--void); }
+.deal__media picture,
+.deal__media img { display: block; width: 100%; height: 100%; }
+.deal__media img { object-fit: cover; transition: transform .6s var(--ease); }
+.deal:hover .deal__media img { transform: scale(1.04); }
+.deal__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: .55rem;
+  padding: clamp(1.2rem, 2.4vw, 1.8rem);
+}
+.deal__until {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+.deal h3 { font-size: clamp(1.7rem, 1.2rem + 1.8vw, 2.4rem); }
+.deal__text { margin: 0; color: var(--mute); }
+.deal__price {
+  margin: auto 0 0;
+  padding-top: .6rem;
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 1.6rem + 2.4vw, 3.6rem);
+  line-height: 1;
+  color: var(--yellow);
+}
+
 .venir__route { margin-top: 1.6rem; }
 
 /* La carte Google ne se charge qu'au clic : la page reste rapide et aucun
