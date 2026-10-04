@@ -97,7 +97,7 @@ window.TACONAAN_MENU = {
         "en": "Served with a cheese naan. No skimping."
       },
       "items": [
-        { "name": "Assiette Simple", "price": 20 },
+        { "name": "Assiette Simple", "price": 11 },
         { "name": "Assiette Double", "price": 13 },
         { "name": "Assiette Triple", "price": 14 },
         { "name": "Boisson en plus", "price": 1.5 }
