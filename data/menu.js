@@ -30,7 +30,7 @@ window.TACONAAN_MENU = {
       "items": [
         {
           "name": "Cheese Naan",
-          "tiers": [6.5, 77.5, 8.5],
+          "tiers": [6.5, 7.5, 8.5],
           "note": {
             "fr": "viande au choix : kebab, poulet, cordon bleu, merguez…",
             "es": "carne a elegir: kebab, pollo, cordon bleu, merguez…",
